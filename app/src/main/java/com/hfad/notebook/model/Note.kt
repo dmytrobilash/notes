@@ -1,4 +1,21 @@
 package com.hfad.notebook.model
 
-class Note {
-}
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "note_table")
+
+class Note (
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0,
+
+    @ColumnInfo
+    var title: String = "",
+
+    @ColumnInfo
+    var description: String = "",
+
+    @ColumnInfo
+    var creationTime: String = ""
+        )
