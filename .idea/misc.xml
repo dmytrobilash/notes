@@ -5,10 +5,10 @@
       <map>
         <entry key="..\:/Users/bilas/AndroidStudioProjects/Notebook/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/bilas/AndroidStudioProjects/Notebook/app/src/main/res/layout/adding_fragment.xml" value="0.11666666666666667" />
-        <entry key="..\:/Users/bilas/AndroidStudioProjects/Notebook/app/src/main/res/layout/deleting_fragment.xml" value="0.11666666666666667" />
+        <entry key="..\:/Users/bilas/AndroidStudioProjects/Notebook/app/src/main/res/layout/deleting_fragment.xml" value="0.25" />
         <entry key="..\:/Users/bilas/AndroidStudioProjects/Notebook/app/src/main/res/layout/note_item.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/bilas/AndroidStudioProjects/Notebook/app/src/main/res/layout/note_items.xml" value="0.25885416666666666" />
-        <entry key="..\:/Users/bilas/AndroidStudioProjects/Notebook/app/src/main/res/layout/strart_fragment.xml" value="0.11666666666666667" />
+        <entry key="..\:/Users/bilas/AndroidStudioProjects/Notebook/app/src/main/res/layout/strart_fragment.xml" value="0.25" />
       </map>
     </option>
   </component>
