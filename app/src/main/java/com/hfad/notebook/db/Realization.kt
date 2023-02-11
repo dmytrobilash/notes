@@ -1,4 +1,20 @@
 package com.hfad.notebook.db
 
-class Realization {
+import androidx.lifecycle.LiveData
+import com.hfad.notebook.model.Note
+
+class Realization(private val dao: Dao) : Repository{
+    override val allNotes: LiveData<List<Note>>
+        get() = dao.getAll()
+
+    override suspend fun insert(note: Note, onSuccess: () -> Unit) {
+        dao.insert(note)
+        onSuccess()
+    }
+
+    override suspend fun delete(note: Note, onSuccess: () -> Unit) {
+        dao.delete(note)
+        onSuccess()
+    }
+
 }
