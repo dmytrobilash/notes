@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
 import com.hfad.notebook.model.Note
-import kotlinx.android.synthetic.main.deleting_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_delete.view.*
 import kotlinx.android.synthetic.main.note_items.view.*
 import kotlinx.android.synthetic.main.note_items.view.title
 

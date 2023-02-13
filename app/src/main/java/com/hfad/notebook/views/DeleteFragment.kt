@@ -1,12 +1,13 @@
 package com.hfad.notebook.views
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-class DeletingFragment : Fragment() {
+class DeleteFragment : Fragment() {
 
 
     override fun onCreateView(

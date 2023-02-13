@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/startFragment">
-
     <fragment
         android:id="@+id/startFragment"
         android:name="com.hfad.notebook.views.StartFragment"
-        android:label="StartFragment" >
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
         <action
-            android:id="@+id/action_startFragment_to_deletingFragment"
-            app:destination="@id/deletingFragment" />
+            android:id="@+id/action_startFragment_to_deleteFragment"
+            app:destination="@id/deleteFragment" />
         <action
-            android:id="@+id/action_startFragment_to_addingFragment"
-            app:destination="@id/addingFragment" />
+            android:id="@+id/action_startFragment_to_addFragment"
+            app:destination="@id/addFragment" />
     </fragment>
     <fragment
-        android:id="@+id/addingFragment"
-        android:name="com.hfad.notebook.views.AddingFragment"
-        android:label="AddingFragment" >
+        android:id="@+id/deleteFragment"
+        android:name="com.hfad.notebook.views.DeleteFragment"
+        android:label="fragment_delete"
+        tools:layout="@layout/fragment_delete" >
         <action
-            android:id="@+id/action_addingFragment_to_startFragment"
+            android:id="@+id/action_deleteFragment_to_startFragment"
             app:destination="@id/startFragment" />
     </fragment>
     <fragment
-        android:id="@+id/deletingFragment"
-        android:name="com.hfad.notebook.views.DeletingFragment"
-        android:label="DeletingFragment" >
+        android:id="@+id/addFragment"
+        android:name="com.hfad.notebook.views.AddFragment"
+        android:label="fragment_add"
+        tools:layout="@layout/fragment_add">
         <action
-            android:id="@+id/action_deletingFragment_to_startFragment"
+            android:id="@+id/action_addFragment_to_startFragment"
             app:destination="@id/startFragment" />
     </fragment>
 </navigation>

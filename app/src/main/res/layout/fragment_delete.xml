@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.DeleteFragment">
 
     <TextView
         android:id="@+id/title"
@@ -10,7 +13,8 @@
         android:textSize="24sp"
         android:text="sfdsfd"
         android:layout_alignParentTop="true"
-        android:gravity="center_horizontal"/>
+        android:gravity="center_horizontal"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/creation_time"
@@ -18,7 +22,8 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="sfdsfd"
-        android:layout_below="@+id/title"/>
+        android:layout_below="@+id/title"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/description"
@@ -26,7 +31,8 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_below="@+id/creation_time"
-        android:layout_above="@+id/linear_deleting"/>
+        android:layout_above="@+id/linear_deleting"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:id="@+id/linear_deleting"
@@ -34,7 +40,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnDelete"
