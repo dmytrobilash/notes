@@ -6,4 +6,6 @@
     <string name="enter_the_tittle">Enter the tittle</string>
     <string name="enter_the_description">Enter the description</string>
     <string name="add">Add note</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

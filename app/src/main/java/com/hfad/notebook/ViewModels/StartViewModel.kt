@@ -13,7 +13,6 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
 
     val context = application
 
-
     fun initDataBase(){
         val daoNote = Database.getInstance(context).getNoteDao()
         REPOSITORY = Realization(daoNote)
