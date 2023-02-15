@@ -14,15 +14,10 @@ interface Dao {
     @Delete
     suspend fun delete(note: Note)
 
-    @Update
-    suspend fun update(note: Note)
+    @Query("UPDATE note_table SET title = :title, description = :description where id = :id")
+    suspend fun update(title: String, description: String, id: Int)
 
     @Query("SELECT * FROM note_table")
     fun getAll():LiveData<List<Note>>
-
-
-
-
-
 
 }

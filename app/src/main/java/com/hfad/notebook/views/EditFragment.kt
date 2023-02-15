@@ -39,12 +39,9 @@ class EditFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             val viewModel = ViewModelProvider(this).get(EditViewModel::class.java)
-            val title = binding.editTitle.text.toString()
-            Log.v("AAAAA", title.toString())
-            val description = binding.editDescription.text.toString()
-            viewModel.update(
-                // TODO: create updation 
-            ) {}
+            currentNote.title = binding.editTitle.text.toString()
+            currentNote.description = binding.editDescription.text.toString()
+            viewModel.update(Note(id = currentNote.id, title = currentNote.title, description = currentNote.description)) {}
             APP.navController.navigate(R.id.action_editFragment_to_startFragment)
         }
 

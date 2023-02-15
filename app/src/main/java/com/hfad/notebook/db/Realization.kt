@@ -17,8 +17,8 @@ class Realization(private val dao: Dao) : Repository{
         onSuccess()
     }
 
-    override suspend fun update(note: Note, onSuccess: () -> Unit) {
-        dao.update(note)
+    override suspend fun update(note:Note, onSuccess: () -> Unit) {
+        dao.update(note.title, note.description, note.id)
         onSuccess()
     }
 
