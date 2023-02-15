@@ -14,8 +14,12 @@ interface Dao {
     @Delete
     suspend fun delete(note: Note)
 
+    @Update
+    suspend fun update(note: Note)
+
     @Query("SELECT * FROM note_table")
     fun getAll():LiveData<List<Note>>
+
 
 
 

@@ -11,6 +11,7 @@ import com.hfad.notebook.R
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.views.StartFragment
 import com.hfad.notebook.views.StartFragment.Companion.clickNote
+import com.hfad.notebook.views.StartFragment.Companion.longClickNote
 import kotlinx.android.synthetic.main.fragment_delete.view.*
 import kotlinx.android.synthetic.main.note_items.view.*
 import kotlinx.android.synthetic.main.note_items.view.title
@@ -27,9 +28,6 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.itemView.title.text = listNote[position].title
-        holder.itemView.setOnClickListener {
-            Toast.makeText(APP, position.toString(), Toast.LENGTH_LONG).show()
-        }
     }
 
     override fun getItemCount(): Int {
@@ -46,6 +44,9 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
         super.onViewAttachedToWindow(holder)
         holder.itemView.setOnClickListener {
             clickNote(listNote[holder.adapterPosition])
+        }
+        holder.itemView.setOnLongClickListener {
+            longClickNote(listNote[holder.adapterPosition])
         }
     }
 

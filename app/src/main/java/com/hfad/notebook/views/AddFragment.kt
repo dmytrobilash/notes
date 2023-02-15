@@ -3,7 +3,6 @@ package com.hfad.notebook.views
 import APP
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.hfad.notebook.R
 import com.hfad.notebook.ViewModels.AddingViewModel
 import com.hfad.notebook.databinding.FragmentAddBinding
-import com.hfad.notebook.databinding.FragmentStartBinding
 import com.hfad.notebook.model.Note
 import java.time.LocalDate
 
