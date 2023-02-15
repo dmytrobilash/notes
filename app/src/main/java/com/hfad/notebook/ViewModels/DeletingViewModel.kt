@@ -8,9 +8,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DeletingViewModel : ViewModel() {
-    fun delete(note: Note, onSuccess:() -> Unit) =
-        viewModelScope.launch (Dispatchers.IO ){
-            REPOSITORY.delete(note){
+    fun delete(note: Note, onSuccess: () -> Unit) =
+        viewModelScope.launch(Dispatchers.IO) {
+            REPOSITORY.delete(note) {
                 onSuccess()
             }
         }

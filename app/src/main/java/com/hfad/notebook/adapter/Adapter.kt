@@ -18,9 +18,7 @@ import kotlinx.android.synthetic.main.note_items.view.title
 class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
 
     var listNote = emptyList<Note>()
-    class NoteViewHolder(view:View) : RecyclerView.ViewHolder(view) {
-
-    }
+    class NoteViewHolder(view:View) : RecyclerView.ViewHolder(view) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.note_items, parent, false)
@@ -33,6 +31,7 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
             Toast.makeText(APP, position.toString(), Toast.LENGTH_LONG).show()
         }
     }
+
     override fun getItemCount(): Int {
         return listNote.size;
     }

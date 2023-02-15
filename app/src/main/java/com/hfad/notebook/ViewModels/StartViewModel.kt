@@ -17,9 +17,8 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
         val daoNote = Database.getInstance(context).getNoteDao()
         REPOSITORY = Realization(daoNote)
     }
+
     fun getAllNotes(): LiveData<List<Note>> {
         return REPOSITORY.allNotes
     }
-
-
 }

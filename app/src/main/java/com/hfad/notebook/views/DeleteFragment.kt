@@ -20,10 +20,7 @@ import java.io.Serializable
 class DeleteFragment : Fragment() {
 
     lateinit var binding: FragmentDeleteBinding
-
-
     lateinit var currentNote: Note
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,11 +43,13 @@ class DeleteFragment : Fragment() {
         val viewModel = ViewModelProvider(this).get(DeletingViewModel::class.java)
         binding.title.text = currentNote.title
         binding.description.text = currentNote.description
+        binding.creationTime.text = currentNote.creationTime
 
         binding.btnDelete.setOnClickListener {
             viewModel.delete(currentNote){}
             APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
         }
+
         binding.btnBack.setOnClickListener {
             APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
         }

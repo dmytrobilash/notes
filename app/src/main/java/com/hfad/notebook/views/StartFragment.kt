@@ -49,8 +49,9 @@ class StartFragment : Fragment() {
             APP.navController.navigate(R.id.action_startFragment_to_addFragment)
         }
     }
-    companion object{
-        fun clickNote(note: Note){
+
+    companion object {
+        fun clickNote(note: Note) {
             val bundle = Bundle()
             bundle.putSerializable("note", note)
             APP.navController.navigate(R.id.action_startFragment_to_deleteFragment, bundle)

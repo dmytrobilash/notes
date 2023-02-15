@@ -10,18 +10,19 @@ import com.hfad.notebook.model.Note
 abstract class Database : RoomDatabase() {
     abstract fun getNoteDao(): Dao
 
-    companion object{
-        private var database:com.hfad.notebook.db.Database ?= null
+    companion object {
+        private var database: com.hfad.notebook.db.Database? = null
 
         @Synchronized
-        fun getInstance(context: Context) : com.hfad.notebook.db.Database{
-            return if(database == null){
-                database = Room.databaseBuilder(context, com.hfad.notebook.db.Database::class.java, "db").build()
+        fun getInstance(context: Context): com.hfad.notebook.db.Database {
+            return if (database == null) {
+                database =
+                    Room.databaseBuilder(context, com.hfad.notebook.db.Database::class.java, "db")
+                        .build()
                 database as com.hfad.notebook.db.Database
-            }else{
+            } else {
                 database as com.hfad.notebook.db.Database
             }
         }
     }
-
 }
