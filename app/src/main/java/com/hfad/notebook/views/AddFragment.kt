@@ -36,10 +36,8 @@ class AddFragment : Fragment() {
         binding.btnAdd.setOnClickListener {
             val title = binding.editTitle.text.toString()
             val description = binding.editDescription.text.toString()
-            viewModel.insert(Note(title = title, description = description)){
-                Log.v("AAAAA", "Fragment")
-                APP.navController.navigate(R.id.action_addFragment_to_startFragment)
-            }
+            viewModel.insert(Note(title = title, description = description, creationTime = "1")){}
+            APP.navController.navigate(R.id.action_addFragment_to_startFragment)
         }
         binding.btnBack.setOnClickListener{
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)

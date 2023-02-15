@@ -2,6 +2,7 @@ package com.hfad.notebook.views
 
 import APP
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.hfad.notebook.R
 import com.hfad.notebook.ViewModels.StartViewModel
 import com.hfad.notebook.adapter.Adapter
 import com.hfad.notebook.databinding.FragmentStartBinding
+import com.hfad.notebook.model.Note
 
 class StartFragment : Fragment() {
 
@@ -39,12 +41,20 @@ class StartFragment : Fragment() {
         recyclerView = binding.rv
         adapter = Adapter()
         recyclerView.adapter = adapter
-        viewModel.getAllNotes().observe(viewLifecycleOwner, { listNotes ->
+        viewModel.getAllNotes().observe(viewLifecycleOwner) { listNotes ->
             adapter.setList(listNotes)
-        })
+        }
+
         binding.fabAdd.setOnClickListener {
             APP.navController.navigate(R.id.action_startFragment_to_addFragment)
         }
     }
-
+    companion object{
+        fun clickNote(note: Note){
+            val bundle = Bundle()
+            bundle.putSerializable("note", note)
+            APP.navController.navigate(R.id.action_startFragment_to_deleteFragment, bundle)
+        }
+    }
 }
+

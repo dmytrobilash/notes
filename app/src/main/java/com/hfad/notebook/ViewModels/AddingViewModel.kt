@@ -12,7 +12,6 @@ class AddingViewModel : ViewModel() {
 
     fun insert(note: Note, onSuccess:() -> Unit) =
         viewModelScope.launch (Dispatchers.IO ){
-            Log.v("AAAA", "Coroutine")
             REPOSITORY.insert(note){
                 onSuccess()
             }
