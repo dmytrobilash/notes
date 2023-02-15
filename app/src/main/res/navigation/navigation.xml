@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_startFragment_to_addFragment"
             app:destination="@id/addFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_editFragment"
+            app:destination="@id/editFragment" />
     </fragment>
     <fragment
         android:id="@+id/deleteFragment"
@@ -32,6 +35,15 @@
         tools:layout="@layout/fragment_add">
         <action
             android:id="@+id/action_addFragment_to_startFragment"
+            app:destination="@id/startFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editFragment"
+        android:name="com.hfad.notebook.views.EditFragment"
+        android:label="fragment_edit"
+        tools:layout="@layout/fragment_edit" >
+        <action
+            android:id="@+id/action_editFragment_to_startFragment"
             app:destination="@id/startFragment" />
     </fragment>
 </navigation>

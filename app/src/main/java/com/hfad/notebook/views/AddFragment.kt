@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.AddingViewModel
+import com.hfad.notebook.ViewModels.AddViewModel
 import com.hfad.notebook.databinding.FragmentAddBinding
 import com.hfad.notebook.model.Note
 import java.time.LocalDate
@@ -36,7 +36,7 @@ class AddFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-        val viewModel = ViewModelProvider(this).get(AddingViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(AddViewModel::class.java)
         binding.btnAdd.setOnClickListener {
             val title = binding.editTitle.text.toString()
             val description = binding.editDescription.text.toString()

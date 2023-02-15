@@ -2,20 +2,15 @@ package com.hfad.notebook.views
 
 import APP
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Nullable
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.AddingViewModel
-import com.hfad.notebook.ViewModels.DeletingViewModel
+import com.hfad.notebook.ViewModels.DeleteViewModel
 import com.hfad.notebook.databinding.FragmentDeleteBinding
 import com.hfad.notebook.model.Note
-import java.io.Serializable
 
 class DeleteFragment : Fragment() {
 
@@ -28,9 +23,7 @@ class DeleteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDeleteBinding.inflate(layoutInflater, container, false)
-        Log.v("AAAAA", bundleOf().getSerializable("note").toString())
         currentNote = arguments?.getSerializable("note") as Note
-        Log.v("AAAAA", currentNote.toString())
         return binding.root
     }
 
@@ -40,7 +33,7 @@ class DeleteFragment : Fragment() {
     }
 
     private fun init() {
-        val viewModel = ViewModelProvider(this).get(DeletingViewModel::class.java)
+        val viewModel = ViewModelProvider(this).get(DeleteViewModel::class.java)
         binding.title.text = currentNote.title
         binding.description.text = currentNote.description
         binding.creationTime.text = currentNote.creationTime

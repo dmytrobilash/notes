@@ -61,8 +61,9 @@ class StartFragment : Fragment() {
         }
 
         fun longClickNote(note:Note): Boolean {
-            val viewModel = StartViewModel(Application())
-            viewModel.delete(note){}
+            val bundle = Bundle()
+            bundle.putSerializable("note", note)
+            APP.navController.navigate(R.id.action_startFragment_to_editFragment, bundle)
             return true
         }
     }
