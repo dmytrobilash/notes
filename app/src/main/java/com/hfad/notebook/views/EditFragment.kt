@@ -2,17 +2,15 @@ package com.hfad.notebook.views
 
 import APP
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.EditViewModel
+import com.hfad.notebook.ViewModels.Edit.EditViewModel
 import com.hfad.notebook.databinding.FragmentEditBinding
 import com.hfad.notebook.model.Note
-import kotlinx.android.synthetic.main.fragment_add.*
 
 
 class EditFragment : Fragment() {

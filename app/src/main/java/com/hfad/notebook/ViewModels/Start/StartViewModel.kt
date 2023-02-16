@@ -1,4 +1,4 @@
-package com.hfad.notebook.ViewModels
+package com.hfad.notebook.ViewModels.Start
 
 import REPOSITORY
 import android.app.Application
@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.hfad.notebook.db.Database
 import com.hfad.notebook.db.Realization
-import com.hfad.notebook.db.Repository
 import com.hfad.notebook.model.Note
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

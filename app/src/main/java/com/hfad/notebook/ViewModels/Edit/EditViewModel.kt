@@ -1,4 +1,4 @@
-package com.hfad.notebook.ViewModels
+package com.hfad.notebook.ViewModels.Edit
 
 import REPOSITORY
 import androidx.lifecycle.ViewModel

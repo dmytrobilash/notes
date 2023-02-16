@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.DeleteViewModel
+import com.hfad.notebook.ViewModels.Delete.DeleteViewModel
 import com.hfad.notebook.databinding.FragmentDeleteBinding
 import com.hfad.notebook.model.Note
 

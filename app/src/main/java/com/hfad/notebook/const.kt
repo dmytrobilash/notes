@@ -1,5 +1,5 @@
 import com.hfad.notebook.MainActivity
-import com.hfad.notebook.db.Repository
+import com.hfad.notebook.db.interfaces.Repository
 
 
 lateinit var APP: MainActivity

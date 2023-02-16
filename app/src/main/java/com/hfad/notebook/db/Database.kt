@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.hfad.notebook.db.interfaces.Dao
 import com.hfad.notebook.model.Note
 
 @Database(entities = [Note::class], version = 1)

@@ -1,4 +1,4 @@
-package com.hfad.notebook.db
+package com.hfad.notebook.db.interfaces
 
 import androidx.lifecycle.LiveData
 import com.hfad.notebook.model.Note

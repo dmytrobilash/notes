@@ -1,9 +1,11 @@
 package com.hfad.notebook.db
 
 import androidx.lifecycle.LiveData
+import com.hfad.notebook.db.interfaces.Dao
+import com.hfad.notebook.db.interfaces.Repository
 import com.hfad.notebook.model.Note
 
-class Realization(private val dao: Dao) : Repository{
+class Realization(private val dao: Dao) : Repository {
     override val allNotes: LiveData<List<Note>>
         get() = dao.getAll()
 

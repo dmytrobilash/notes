@@ -1,22 +1,18 @@
 package com.hfad.notebook.views
 
 import APP
-import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.StartViewModel
+import com.hfad.notebook.ViewModels.Start.StartViewModel
 import com.hfad.notebook.adapter.Adapter
 import com.hfad.notebook.databinding.FragmentStartBinding
 import com.hfad.notebook.model.Note
-import java.nio.file.Files.delete
 
 class StartFragment : Fragment() {
 

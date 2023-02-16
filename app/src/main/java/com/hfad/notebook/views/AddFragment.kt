@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.AddViewModel
+import com.hfad.notebook.ViewModels.Add.AddViewModel
 import com.hfad.notebook.databinding.FragmentAddBinding
 import com.hfad.notebook.model.Note
 import java.time.LocalDate
