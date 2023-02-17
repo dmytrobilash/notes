@@ -1,7 +1,6 @@
 package com.hfad.notebook.views
 
 import APP
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
-import com.hfad.notebook.SwipeToDeleteCallback
+import com.hfad.notebook.Swipe
 import com.hfad.notebook.ViewModels.Start.StartViewModel
 import com.hfad.notebook.adapter.Adapter
 import com.hfad.notebook.databinding.FragmentStartBinding
@@ -53,6 +53,20 @@ class StartFragment : Fragment(){
             APP.navController.navigate(R.id.action_startFragment_to_addFragment)
         }
 
+        val swipe = object : Swipe(context) {
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+
+                when (direction) {
+                    ItemTouchHelper.LEFT -> {
+                        Toast.makeText(APP, "I am here", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+            }
+        }
+        val touchHelper = ItemTouchHelper(swipe)
+        touchHelper.attachToRecyclerView(recyclerView)
     }
 
     companion object {
@@ -68,6 +82,7 @@ class StartFragment : Fragment(){
             APP.navController.navigate(R.id.action_startFragment_to_editFragment, bundle)
             return true
         }
+
 
     }
 }

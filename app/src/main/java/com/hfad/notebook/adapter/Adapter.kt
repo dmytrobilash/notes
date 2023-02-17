@@ -5,16 +5,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
-import com.hfad.notebook.SwipeToDeleteCallback
 import com.hfad.notebook.model.Note
-import com.hfad.notebook.views.StartFragment
 import com.hfad.notebook.views.StartFragment.Companion.clickNote
 import com.hfad.notebook.views.StartFragment.Companion.longClickNote
-import kotlinx.android.synthetic.main.fragment_delete.view.*
-import kotlinx.android.synthetic.main.note_items.view.*
 import kotlinx.android.synthetic.main.note_items.view.title
 
 class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
@@ -49,8 +44,7 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
         holder.itemView.setOnLongClickListener {
             longClickNote(listNote[holder.adapterPosition])
         }
-        val swipeToDeleteCallback = SwipeToDeleteCallback()
-        swipeToDeleteCallback.onSwiped(holder, holder.adapterPosition)
+
     }
 
     override fun onViewDetachedFromWindow(holder: NoteViewHolder) {
