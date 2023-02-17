@@ -29,4 +29,5 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
                 onSuccess()
             }
         }
+
 }

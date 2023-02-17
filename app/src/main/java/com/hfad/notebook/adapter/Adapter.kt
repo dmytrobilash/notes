@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
+import com.hfad.notebook.SwipeToDeleteCallback
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.views.StartFragment
 import com.hfad.notebook.views.StartFragment.Companion.clickNote
@@ -48,9 +49,12 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
         holder.itemView.setOnLongClickListener {
             longClickNote(listNote[holder.adapterPosition])
         }
+        val swipeToDeleteCallback = SwipeToDeleteCallback()
+        swipeToDeleteCallback.onSwiped(holder, holder.adapterPosition)
     }
 
     override fun onViewDetachedFromWindow(holder: NoteViewHolder) {
         holder.itemView.setOnClickListener(null)
     }
+
 }

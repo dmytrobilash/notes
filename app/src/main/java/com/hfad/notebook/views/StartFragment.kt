@@ -1,20 +1,24 @@
 package com.hfad.notebook.views
 
 import APP
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
+import com.hfad.notebook.SwipeToDeleteCallback
 import com.hfad.notebook.ViewModels.Start.StartViewModel
 import com.hfad.notebook.adapter.Adapter
 import com.hfad.notebook.databinding.FragmentStartBinding
 import com.hfad.notebook.model.Note
 
-class StartFragment : Fragment() {
+
+class StartFragment : Fragment(){
 
     lateinit var binding: FragmentStartBinding
     lateinit var recyclerView: RecyclerView
@@ -32,6 +36,7 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+
     }
 
     private fun init() {
@@ -47,6 +52,7 @@ class StartFragment : Fragment() {
         binding.fabAdd.setOnClickListener {
             APP.navController.navigate(R.id.action_startFragment_to_addFragment)
         }
+
     }
 
     companion object {
@@ -62,6 +68,7 @@ class StartFragment : Fragment() {
             APP.navController.navigate(R.id.action_startFragment_to_editFragment, bundle)
             return true
         }
+
     }
 }
 

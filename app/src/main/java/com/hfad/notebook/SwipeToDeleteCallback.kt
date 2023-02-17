@@ -1,18 +1,21 @@
 package com.hfad.notebook
 
+import APP
 import android.R
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.hfad.notebook.views.StartFragment
 
 
-abstract class SwipeToDeleteCallback : ItemTouchHelper.Callback() {
-    var mContext: Context? = null
+class SwipeToDeleteCallback : ItemTouchHelper.Callback() {
+    //var mContext: Context? = context
     private var mClearPaint: Paint? = null
     private var mBackground: ColorDrawable? = null
     private var backgroundColor = 0
@@ -21,15 +24,14 @@ abstract class SwipeToDeleteCallback : ItemTouchHelper.Callback() {
     private var intrinsicHeight = 0
 
 
-    open fun SwipeToDeleteCallback(context: Context?) {
-        mContext = context
+    init {
         mBackground = ColorDrawable()
         backgroundColor = Color.parseColor("#b80f0a")
         mClearPaint = Paint()
         mClearPaint!!.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-        deleteDrawable = ContextCompat.getDrawable(mContext!!, R.drawable.ic_delete)
-        intrinsicWidth = deleteDrawable!!.intrinsicWidth
-        intrinsicHeight = deleteDrawable!!.intrinsicHeight
+        //deleteDrawable = ContextCompat.getDrawable(mContext!!, R.drawable.ic_delete)
+        //intrinsicWidth = deleteDrawable!!.intrinsicWidth
+        //intrinsicHeight = deleteDrawable!!.intrinsicHeight
     }
 
     override fun getMovementFlags(
@@ -91,7 +93,12 @@ abstract class SwipeToDeleteCallback : ItemTouchHelper.Callback() {
         val deleteIconBottom = deleteIconTop + intrinsicHeight
 
 
-        deleteDrawable!!.setBounds(deleteIconLeft, deleteIconTop, deleteIconRight, deleteIconBottom)
+        deleteDrawable!!.setBounds(
+            deleteIconLeft,
+            deleteIconTop,
+            deleteIconRight,
+            deleteIconBottom
+        )
         deleteDrawable!!.draw(c)
 
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
@@ -100,6 +107,11 @@ abstract class SwipeToDeleteCallback : ItemTouchHelper.Callback() {
 
     override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float {
         return 0.7f
+    }
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        viewHolder.adapterPosition
+        Toast.makeText(APP, viewHolder.adapterPosition.toString(), Toast.LENGTH_SHORT).show()
     }
 
     private fun clearCanvas(c: Canvas, left: Float, top: Float, right: Float, bottom: Float) {
