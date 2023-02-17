@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
 import com.hfad.notebook.Swipe
+import com.hfad.notebook.ViewModels.Delete.DeleteViewModel
 import com.hfad.notebook.ViewModels.Start.StartViewModel
 import com.hfad.notebook.adapter.Adapter
 import com.hfad.notebook.databinding.FragmentStartBinding
@@ -59,8 +60,9 @@ class StartFragment : Fragment(){
 
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        Toast.makeText(APP, "I am here", Toast.LENGTH_SHORT).show()
-
+                        val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
+                        viewModel.delete(adapter.listNote[viewHolder.adapterPosition]){}
+                        Toast.makeText(APP, "I am left", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
