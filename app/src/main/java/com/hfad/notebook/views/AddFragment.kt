@@ -38,8 +38,8 @@ class AddFragment : Fragment() {
     private fun init() {
         val viewModel = ViewModelProvider(this).get(AddViewModel::class.java)
         binding.btnAdd.setOnClickListener {
-            val title = binding.editTitle.text.toString()
-            val description = binding.editDescription.text.toString()
+            val title = binding.editTitle.editText?.text.toString()
+            val description = binding.editDescription.editText?.text.toString()
             viewModel.insert(
                 Note(
                     title = title,

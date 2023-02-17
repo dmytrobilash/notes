@@ -31,7 +31,15 @@ abstract class Swipe (context : Context?) : ItemTouchHelper.SimpleCallback(0, It
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        RecyclerViewSwipeDecorator.Builder(
+            c,
+            recyclerView,
+            viewHolder,
+            dX,
+            dY,
+            actionState,
+            isCurrentlyActive
+        )
             .addSwipeLeftBackgroundColor(deleteColor)
             .addSwipeLeftActionIcon(deleteIcon)
             .create()

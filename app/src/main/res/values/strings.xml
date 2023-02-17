@@ -2,10 +2,15 @@
     <string name="app_name">Notebook</string>
     <string name="delete">Delete</string>
     <string name="back">Back</string>
-    <string name="adding_note">Adding Note</string>
+    <string name="adding_note">Add Note</string>
     <string name="enter_the_tittle">Enter the tittle</string>
     <string name="enter_the_description">Enter the description</string>
-    <string name="add">Add note</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="editing_note">Edit Note</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_example">TEXT_EXAMPLE</string>
+    <string name="btnadd">btnAdd</string>
+    <string name="title">Title</string>
+    <string name="creation_time">Creation time</string>
+    <string name="description">Description</string>
+    <string name="create_note">Create Note</string>
 </resources>

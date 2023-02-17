@@ -23,7 +23,9 @@
         android:src="@drawable/ic_baseline_add_24"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
         app:fabSize="normal"
-        android:contentDescription="btnAdd"
-        tools:ignore="MissingConstraints" />
+        android:contentDescription="@string/btnadd"
+        />
+
 </RelativeLayout>
