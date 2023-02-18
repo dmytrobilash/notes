@@ -13,4 +13,5 @@
     <string name="creation_time">Creation time</string>
     <string name="description">Description</string>
     <string name="create_note">Create Note</string>
+    <string name="select_priority">Select priority</string>
 </resources>
