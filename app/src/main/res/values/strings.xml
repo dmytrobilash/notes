@@ -14,4 +14,7 @@
     <string name="description">Description</string>
     <string name="create_note">Create Note</string>
     <string name="select_priority">Select priority</string>
+    <string name="pick_final_date">Pick final date</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="pick_time">Pick time</string>
 </resources>
