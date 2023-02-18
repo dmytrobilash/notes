@@ -19,7 +19,7 @@ import com.hfad.notebook.databinding.FragmentStartBinding
 import com.hfad.notebook.model.Note
 
 
-class StartFragment : Fragment(){
+class StartFragment : Fragment() {
 
     lateinit var binding: FragmentStartBinding
     lateinit var recyclerView: RecyclerView
@@ -61,8 +61,7 @@ class StartFragment : Fragment(){
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
                         val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
-                        viewModel.delete(adapter.listNote[viewHolder.adapterPosition]){}
-                        Toast.makeText(APP, "I am left", Toast.LENGTH_SHORT).show()
+                        viewModel.delete(adapter.listNote[viewHolder.adapterPosition]) {}
                     }
                 }
             }
@@ -78,14 +77,12 @@ class StartFragment : Fragment(){
             APP.navController.navigate(R.id.action_startFragment_to_deleteFragment, bundle)
         }
 
-        fun longClickNote(note:Note): Boolean {
+        fun longClickNote(note: Note): Boolean {
             val bundle = Bundle()
             bundle.putSerializable("note", note)
             APP.navController.navigate(R.id.action_startFragment_to_editFragment, bundle)
             return true
         }
-
-
     }
 }
 

@@ -24,6 +24,8 @@ class EditFragment : Fragment() {
     ): View? {
         binding = FragmentEditBinding.inflate(layoutInflater, container, false)
         currentNote = arguments?.getSerializable("note") as Note
+        binding.editTitle.editText?.setText(currentNote.title)
+        binding.editDescription.editText?.setText(currentNote.description)
         return binding.root
 
     }
