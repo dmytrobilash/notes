@@ -14,6 +14,8 @@ import com.hfad.notebook.ViewModels.Add.AddViewModel
 import com.hfad.notebook.databinding.FragmentAddBinding
 import com.hfad.notebook.model.Note
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 
 class AddFragment : Fragment() {
 
@@ -44,7 +46,7 @@ class AddFragment : Fragment() {
                 Note(
                     title = title,
                     description = description,
-                    creationTime = LocalDate.now().toString()
+                    creationTime = LocalTime.now().toString().substring(0, 8)+  " " + LocalDate.now().toString().substring(5)
                 )
             ) {}
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)
