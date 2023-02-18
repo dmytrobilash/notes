@@ -17,6 +17,12 @@ class Note(
     @ColumnInfo(name="description")
     var description: String = "",
 
-    @ColumnInfo
-    var creationTime: String = ""
-        ) : Serializable
+    @ColumnInfo(name = "creation")
+    var creationTime: String = "",
+
+    @ColumnInfo(name = "priority")
+    var taskPriority: Int = 0,
+
+    @ColumnInfo(name = "finish")
+    var finished: String = ""
+        ): Serializable

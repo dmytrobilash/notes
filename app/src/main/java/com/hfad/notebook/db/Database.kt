@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.hfad.notebook.db.interfaces.Dao
 import com.hfad.notebook.model.Note
 
-@Database(entities = [Note::class], version = 1)
+@Database(entities = [Note::class], version = 2)
 abstract class Database : RoomDatabase() {
     abstract fun getNoteDao(): Dao
 
@@ -18,7 +18,7 @@ abstract class Database : RoomDatabase() {
         fun getInstance(context: Context): com.hfad.notebook.db.Database {
             return if (database == null) {
                 database =
-                    Room.databaseBuilder(context, com.hfad.notebook.db.Database::class.java, "db")
+                    Room.databaseBuilder(context, com.hfad.notebook.db.Database::class.java, "db_1")
                         .build()
                 database as com.hfad.notebook.db.Database
             } else {
