@@ -37,6 +37,7 @@ class DeleteFragment : Fragment() {
         binding.title.text = currentNote.title
         binding.description.text = currentNote.description
         binding.creationTime.text = currentNote.creationTime
+        binding.finishedTime.text = currentNote.finished
 
         binding.btnDelete.setOnClickListener {
             viewModel.delete(currentNote){}

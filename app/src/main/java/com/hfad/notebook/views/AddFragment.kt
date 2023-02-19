@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -98,9 +99,23 @@ class AddFragment : Fragment() {
             ) {}
 
             createNotificationChannel()
-            val intent = Intent(APP, NotificationReceiver::class.java)
-            val pI = PendingIntent.getBroadcast(APP, 0, intent, 0)
-            val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(APP, NotificationReceiver::class.java).apply {
+                putExtra("title", title)
+                putExtra("description", description)
+            }
+            val pI = PendingIntent.getBroadcast(
+                APP,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            )
+
+            // trash I spend 2 hours to setup this PendingIntent.FLAG_UPDATE_CURRENT shit i cant comment it
+            // i so exhausted with this programming
+            //there is not words to describe this tilt
+
+            val alarmManager =
+                requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.set(AlarmManager.RTC_WAKEUP, 5000, pI)
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)
         }
@@ -146,11 +161,10 @@ class AddFragment : Fragment() {
         dpd.show()
     }
 
-    fun createNotificationChannel(){
+    private fun createNotificationChannel(){
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             val name = "Remainder"
-            val description = "Decription for remainder"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel("Notify", name, importance)
 
