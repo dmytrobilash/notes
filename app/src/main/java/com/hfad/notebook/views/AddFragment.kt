@@ -147,13 +147,15 @@ class AddFragment : Fragment() {
     }
 
     fun createNotificationChannel(){
+
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             val name = "Remainder"
             val description = "Decription for remainder"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel: NotificationChannel = NotificationChannel(
-                "Notify", name, importance
-            )
+            val channel = NotificationChannel("Notify", name, importance)
+
+            val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 }
