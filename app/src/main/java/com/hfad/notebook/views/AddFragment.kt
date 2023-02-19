@@ -84,7 +84,6 @@ class AddFragment : Fragment() {
             val dpd = DatePickerDialog(
                 APP,
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    // Update the text of the appropriate view with the selected date
                     binding.datePickerInput.editText?.setText("$year/${month + 1}/$dayOfMonth")
                 },
                 mYear,
@@ -95,16 +94,32 @@ class AddFragment : Fragment() {
         }
 
         binding.btnAdd.setOnClickListener {
+
             val title = binding.editTitle.editText?.text.toString()
             val description = binding.editDescription.editText?.text.toString()
+            val localTime = LocalTime.now().toString().substring(0, 5)
+            val localDate = LocalDate.now().toString().replace("-", "/")
+            val creationTime = "$localTime $localDate"
+
+            var finishTime = binding.timePickerInput.editText?.text.toString()
+
+            if (finishTime.length == 4) {
+                finishTime = "0$finishTime"
+            }
+
+            val finishDate = binding.datePickerInput.editText?.text.toString()
+
+            val finishedTime = "$finishTime $finishDate"
+            var taskPriority = binding.filledExposed.text.toString()
+            if (taskPriority == "") taskPriority = "0"
+
             viewModel.insert(
                 Note(
                     title = title,
                     description = description,
-                    creationTime = LocalTime.now().toString()
-                        .substring(0, 8) + " " + LocalDate.now().toString().substring(5),
-                    taskPriority = binding.filledExposed.text.toString().toInt(),
-                    //todo finished time()
+                    creationTime = creationTime,
+                    taskPriority = taskPriority.toInt(),
+                    finished = finishedTime
                 )
             ) {}
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)
