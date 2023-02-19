@@ -1,8 +1,10 @@
 package com.hfad.notebook.views
 
 import APP
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
+import android.annotation.SuppressLint
+import android.app.*
+import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +13,10 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.hfad.notebook.NotificationReceiver
 import com.hfad.notebook.R
 import com.hfad.notebook.ViewModels.Add.AddViewModel
 import com.hfad.notebook.databinding.FragmentAddBinding
@@ -41,17 +45,13 @@ class AddFragment : Fragment() {
         init()
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     @RequiresApi(Build.VERSION_CODES.O)
     private fun init() {
-        var mYear: Int;
-        var mMonth: Int;
-        var mDay: Int;
-        var mHour: Int;
-        var mMinute: Int
+
         val viewModel = ViewModelProvider(this).get(AddViewModel::class.java)
 
         val priorities: Array<String> = arrayOf("0", "1", "2", "3")
-
         val adapter = ArrayAdapter(
             APP,
             R.layout.drop_down_items,
@@ -60,37 +60,11 @@ class AddFragment : Fragment() {
         binding.filledExposed.setAdapter(adapter)
 
         binding.timePickerBtn.setOnClickListener {
-            val calendar: Calendar = Calendar.getInstance()
-            mHour = calendar.get(Calendar.HOUR_OF_DAY)
-            mMinute = calendar.get(Calendar.MINUTE)
-            val tpd = TimePickerDialog(
-                APP,
-                TimePickerDialog.OnTimeSetListener() { view, hourOfDay, minute ->
-                    binding.timePickerInput.editText?.setText("$hourOfDay:$minute")
-                },
-                mHour,
-                mMinute,
-                false
-            )
-            tpd.show()
+            showTimePicker()
         }
 
         binding.datePickerBtn.setOnClickListener {
-            val calendar: Calendar = Calendar.getInstance()
-            mYear = calendar.get(Calendar.YEAR)
-            mMonth = calendar.get(Calendar.MONTH)
-            mDay = calendar.get(Calendar.DAY_OF_MONTH)
-
-            val dpd = DatePickerDialog(
-                APP,
-                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    binding.datePickerInput.editText?.setText("$year/${month + 1}/$dayOfMonth")
-                },
-                mYear,
-                mMonth,
-                mDay
-            )
-            dpd.show()
+            showDatePicker()
         }
 
         binding.btnAdd.setOnClickListener {
@@ -122,10 +96,64 @@ class AddFragment : Fragment() {
                     finished = finishedTime
                 )
             ) {}
+
+            createNotificationChannel()
+            val intent = Intent(APP, NotificationReceiver::class.java)
+            val pI = PendingIntent.getBroadcast(APP, 0, intent, 0)
+            val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.set(AlarmManager.RTC_WAKEUP, 5000, pI)
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)
         }
+
         binding.btnBack.setOnClickListener {
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showTimePicker() {
+        val calendar = Calendar.getInstance()
+        val mHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val mMinute = calendar.get(Calendar.MINUTE)
+        val tpd = TimePickerDialog(
+            APP,
+            TimePickerDialog.OnTimeSetListener() { view, hourOfDay, minute ->
+                binding.timePickerInput.editText?.setText("$hourOfDay:$minute")
+            },
+            mHour,
+            mMinute,
+            false
+        )
+        tpd.show()
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+        val mYear = calendar.get(Calendar.YEAR)
+        val mMonth = calendar.get(Calendar.MONTH)
+        val mDay = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(
+            APP,
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                binding.datePickerInput.editText?.setText("$year/${month + 1}/$dayOfMonth")
+            },
+            mYear,
+            mMonth,
+            mDay
+        )
+        dpd.show()
+    }
+
+    fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            val name = "Remainder"
+            val description = "Decription for remainder"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel: NotificationChannel = NotificationChannel(
+                "Notify", name, importance
+            )
         }
     }
 }
