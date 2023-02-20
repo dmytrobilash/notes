@@ -1,5 +1,7 @@
 package com.hfad.notebook.views
 
+import java.util.*
+import java.math.BigDecimal
 import APP
 import android.annotation.SuppressLint
 import android.app.*
@@ -96,26 +98,20 @@ class AddFragment : Fragment() {
                     finished = finishedTime
                 )
             ) {}
+            val currentDate = Date()
+            val selectedDateString =  binding.timePickerInput.editText?.text.toString()
+            val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
+            val finishedDate = dateFormat.parse(selectedDateString)
 
-            createNotificationChannel()
-            val intent = Intent(APP, NotificationReceiver::class.java).apply {
-                putExtra("title", title)
-                putExtra("description", description)
-            }
-            val pI = PendingIntent.getBroadcast(
-                APP,
-                0,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
+            val difference = finishedDate.time - currentDate.time
 
-            // trash I spend 2 hours to setup this PendingIntent.FLAG_UPDATE_CURRENT shit i cant comment it
-            // i so exhausted with this programming
-            //there is not words to describe this tilt
+            Toast.makeText(APP, difference.toString(), Toast.LENGTH_SHORT).show()
 
-            val alarmManager =
-                requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.set(AlarmManager.RTC_WAKEUP, 5000, pI)
+            binding.datePickerInput.editText?.setText(currentDate.toString())
+            binding.timePickerInput.editText?.setText(finishedDate!!.toString())
+
+            setNotificationAtSelectedTime(difference, title, description)
+
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)
         }
 
@@ -146,8 +142,8 @@ class AddFragment : Fragment() {
                             Toast.makeText(APP, "Please select a future time", Toast.LENGTH_SHORT).show()
                             return@TimePickerDialog
                         }
+
                         binding.timePickerInput.editText?.setText(selectedDate.toString())
-                        // Use the selected date here
                     },
                     now.get(Calendar.HOUR_OF_DAY),
                     now.get(Calendar.MINUTE),
@@ -176,4 +172,24 @@ class AddFragment : Fragment() {
             notificationManager.createNotificationChannel(channel)
         }
     }
+
+    @SuppressLint("UnspecifiedImmutableFlag")
+    private fun setNotificationAtSelectedTime(selectedTimeInMillis: Long, title: String, description: String) {
+        createNotificationChannel()
+        val intent = Intent(APP, NotificationReceiver::class.java).apply {
+            putExtra("title", selectedTimeInMillis.toString())
+            putExtra("description", description)
+        }
+        val pI = PendingIntent.getBroadcast(
+            APP,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        // Set the alarm to trigger at the selected time
+        alarmManager.set(AlarmManager.RTC_WAKEUP, Date().time+selectedTimeInMillis, pI)
+    }
+
 }
