@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
@@ -22,6 +23,7 @@ import com.hfad.notebook.R
 import com.hfad.notebook.ViewModels.Add.AddViewModel
 import com.hfad.notebook.databinding.FragmentAddBinding
 import com.hfad.notebook.model.Note
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -60,9 +62,6 @@ class AddFragment : Fragment() {
         )
         binding.filledExposed.setAdapter(adapter)
 
-        binding.timePickerBtn.setOnClickListener {
-            showTimePicker()
-        }
 
         binding.datePickerBtn.setOnClickListener {
             showDatePicker()
@@ -125,40 +124,45 @@ class AddFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun showTimePicker() {
-        val calendar = Calendar.getInstance()
-        val mHour = calendar.get(Calendar.HOUR_OF_DAY)
-        val mMinute = calendar.get(Calendar.MINUTE)
-        val tpd = TimePickerDialog(
-            APP,
-            TimePickerDialog.OnTimeSetListener() { view, hourOfDay, minute ->
-                binding.timePickerInput.editText?.setText("$hourOfDay:$minute")
-            },
-            mHour,
-            mMinute,
-            false
-        )
-        tpd.show()
-    }
-
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     private fun showDatePicker() {
-        val calendar = Calendar.getInstance()
-        val mYear = calendar.get(Calendar.YEAR)
-        val mMonth = calendar.get(Calendar.MONTH)
-        val mDay = calendar.get(Calendar.DAY_OF_MONTH)
-
-        val dpd = DatePickerDialog(
+        val now = Calendar.getInstance()
+        val datePickerDialog = DatePickerDialog(
             APP,
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                binding.datePickerInput.editText?.setText("$year/${month + 1}/$dayOfMonth")
+            { _, year, month, dayOfMonth ->
+
+                val timePickerDialog = TimePickerDialog(
+                    APP,
+                    { _, hourOfDay, minute ->
+                        // Handle the selected date and time
+                        val selectedDate = Calendar.getInstance().apply {
+                            set(year, month, dayOfMonth, hourOfDay, minute)
+                        }.time
+
+                        val currentDate = Calendar.getInstance().time
+                        if (selectedDate.before(currentDate)) {
+                            // Handle error, for example:
+                            Toast.makeText(APP, "Please select a future time", Toast.LENGTH_SHORT).show()
+                            return@TimePickerDialog
+                        }
+                        binding.timePickerInput.editText?.setText(selectedDate.toString())
+                        // Use the selected date here
+                    },
+                    now.get(Calendar.HOUR_OF_DAY),
+                    now.get(Calendar.MINUTE),
+                    true
+                )
+                timePickerDialog.show()
             },
-            mYear,
-            mMonth,
-            mDay
+            now.get(Calendar.YEAR),
+            now.get(Calendar.MONTH),
+            now.get(Calendar.DAY_OF_MONTH)
         )
-        dpd.show()
+
+        datePickerDialog.datePicker.minDate = now.timeInMillis
+        datePickerDialog.show()
+
     }
 
     private fun createNotificationChannel(){
