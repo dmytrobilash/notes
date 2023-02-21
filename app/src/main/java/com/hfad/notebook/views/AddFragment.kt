@@ -1,7 +1,6 @@
 package com.hfad.notebook.views
 
 import java.util.*
-import java.math.BigDecimal
 import APP
 import android.annotation.SuppressLint
 import android.app.*
@@ -71,44 +70,38 @@ class AddFragment : Fragment() {
 
         binding.btnAdd.setOnClickListener {
 
+            val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
             val title = binding.editTitle.editText?.text.toString()
             val description = binding.editDescription.editText?.text.toString()
-            val localTime = LocalTime.now().toString().substring(0, 5)
-            val localDate = LocalDate.now().toString().replace("-", "/")
-            val creationTime = "$localTime $localDate"
-
-            var finishTime = binding.timePickerInput.editText?.text.toString()
-
-            if (finishTime.length == 4) {
-                finishTime = "0$finishTime"
-            }
-
-            val finishDate = binding.datePickerInput.editText?.text.toString()
-
-            val finishedTime = "$finishTime $finishDate"
             var taskPriority = binding.filledExposed.text.toString()
+            var selectedDateString: String = binding.dateInput.text.toString()
+
             if (taskPriority == "") taskPriority = "0"
+
+            val currentDate = Date()
+
+            val finishedDateLong: Long
+            if (selectedDateString == "") {
+                selectedDateString = currentDate.toString()
+                finishedDateLong = (dateFormat.parse(selectedDateString)?.time ?: currentDate.time) + 60000 //3 600 000 is time for hour
+            } else {
+                finishedDateLong = dateFormat.parse(selectedDateString)?.time ?: currentDate.time
+            }
+            val finishedDate = Date(finishedDateLong)
+            val finishedDateString = dateFormat.format(finishedDate)
 
             viewModel.insert(
                 Note(
                     title = title,
                     description = description,
-                    creationTime = creationTime,
+                    creationTime = currentDate.toString(),
                     taskPriority = taskPriority.toInt(),
-                    finished = finishedTime
+                    finished = finishedDateString
                 )
             ) {}
-            val currentDate = Date()
-            val selectedDateString =  binding.timePickerInput.editText?.text.toString()
-            val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
-            val finishedDate = dateFormat.parse(selectedDateString)
+
 
             val difference = finishedDate.time - currentDate.time
-
-            Toast.makeText(APP, difference.toString(), Toast.LENGTH_SHORT).show()
-
-            binding.datePickerInput.editText?.setText(currentDate.toString())
-            binding.timePickerInput.editText?.setText(finishedDate!!.toString())
 
             setNotificationAtSelectedTime(difference, title, description)
 
@@ -139,11 +132,12 @@ class AddFragment : Fragment() {
                         val currentDate = Calendar.getInstance().time
                         if (selectedDate.before(currentDate)) {
                             // Handle error, for example:
-                            Toast.makeText(APP, "Please select a future time", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(APP, "Please select a future time", Toast.LENGTH_SHORT)
+                                .show()
                             return@TimePickerDialog
                         }
 
-                        binding.timePickerInput.editText?.setText(selectedDate.toString())
+                        binding.dateInput.text = selectedDate.toString()
                     },
                     now.get(Calendar.HOUR_OF_DAY),
                     now.get(Calendar.MINUTE),
@@ -161,24 +155,30 @@ class AddFragment : Fragment() {
 
     }
 
-    private fun createNotificationChannel(){
+    private fun createNotificationChannel() {
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Remainder"
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel("Notify", name, importance)
 
-            val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager =
+                requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    private fun setNotificationAtSelectedTime(selectedTimeInMillis: Long, title: String, description: String) {
+    private fun setNotificationAtSelectedTime(
+        selectedTimeInMillis: Long,
+        title: String,
+        description: String
+    ) {
         createNotificationChannel()
         val intent = Intent(APP, NotificationReceiver::class.java).apply {
-            putExtra("title", selectedTimeInMillis.toString())
+            putExtra("title", title)
             putExtra("description", description)
+            putExtra("id", selectedTimeInMillis)
         }
         val pI = PendingIntent.getBroadcast(
             APP,
@@ -189,7 +189,7 @@ class AddFragment : Fragment() {
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         // Set the alarm to trigger at the selected time
-        alarmManager.set(AlarmManager.RTC_WAKEUP, Date().time+selectedTimeInMillis, pI)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, Date().time + selectedTimeInMillis, pI)
     }
 
 }
