@@ -20,7 +20,7 @@ class Realization(private val dao: Dao) : Repository {
     }
 
     override suspend fun update(note:Note, onSuccess: () -> Unit) {
-        dao.update(note.title, note.description, note.id)
+        dao.update(note.title, note.description, note.finished, note.taskPriority, note.id)
         onSuccess()
     }
 

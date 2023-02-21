@@ -14,8 +14,8 @@ interface Dao {
     @Delete
     suspend fun delete(note: Note)
 
-    @Query("UPDATE note_table SET title = :title, description = :description where id = :id")
-    suspend fun update(title: String, description: String, id: Int)
+    @Query("UPDATE note_table SET title = :title, description = :description, finish = :finished, priority = :taskPriority where id = :id")
+    suspend fun update(title: String, description: String, finished: String , taskPriority: Int, id: Int)
 
     @Query("SELECT * FROM note_table")
     fun getAll():LiveData<List<Note>>
