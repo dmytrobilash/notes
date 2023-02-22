@@ -81,7 +81,7 @@ class AddFragment : Fragment() {
             val currentDate = Date()
 
             val finishedDateLong: Long
-            if (selectedDateString == "") {
+            if (selectedDateString == "Press the button left") {
                 selectedDateString = currentDate.toString()
                 finishedDateLong = (dateFormat.parse(selectedDateString)?.time ?: currentDate.time) + 60000 //3 600 000 is time for hour
             } else {

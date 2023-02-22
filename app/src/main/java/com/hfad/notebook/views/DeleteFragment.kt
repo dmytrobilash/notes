@@ -1,6 +1,7 @@
 package com.hfad.notebook.views
 
 import APP
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,7 @@ class DeleteFragment : Fragment() {
         init()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() {
         val viewModel = ViewModelProvider(this).get(DeleteViewModel::class.java)
         binding.title.text = currentNote.title
@@ -39,8 +41,17 @@ class DeleteFragment : Fragment() {
         binding.creationTime.text = currentNote.creationTime
         binding.finishedTime.text = currentNote.finished
 
+        when(currentNote.taskPriority){
+            0 ->  binding.taskPriority.text = "High"
+            1 ->  binding.taskPriority.text = "Important"
+            2 ->  binding.taskPriority.text = "Normal"
+            3 ->  binding.taskPriority.text = "Low"
+        }
+        binding.taskPriority.text = currentNote.taskPriority.toString()
+
         binding.btnDelete.setOnClickListener {
             viewModel.delete(currentNote){}
+
             APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
         }
 

@@ -16,6 +16,7 @@ class NotificationReceiver : BroadcastReceiver (){
 
         val notificationTitle = intent?.getStringExtra("title")
         val notificationMessage = intent?.getStringExtra("description")
+        val id = intent?.getLongExtra("id", Long.MAX_VALUE)
         val builder = NotificationCompat.Builder(context!!, "Notify")
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setContentTitle(notificationTitle)
@@ -23,6 +24,6 @@ class NotificationReceiver : BroadcastReceiver (){
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(200, builder.build())
+        notificationManager.notify(id!!.toInt(), builder.build())
     }
 }
