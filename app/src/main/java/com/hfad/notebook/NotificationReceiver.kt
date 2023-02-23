@@ -1,14 +1,11 @@
 package com.hfad.notebook
 
-import APP
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import kotlin.reflect.typeOf
 
 class NotificationReceiver : BroadcastReceiver (){
 
@@ -16,7 +13,7 @@ class NotificationReceiver : BroadcastReceiver (){
 
         val notificationTitle = intent?.getStringExtra("title")
         val notificationMessage = intent?.getStringExtra("description")
-        val id = intent?.getLongExtra("id", Long.MAX_VALUE)
+
         val builder = NotificationCompat.Builder(context!!, "Notify")
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setContentTitle(notificationTitle)
@@ -24,6 +21,6 @@ class NotificationReceiver : BroadcastReceiver (){
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(id!!.toInt(), builder.build())
+        notificationManager.notify(1,  builder.build())
     }
 }

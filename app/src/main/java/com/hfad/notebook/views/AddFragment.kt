@@ -83,7 +83,8 @@ class AddFragment : Fragment() {
             val finishedDateLong: Long
             if (selectedDateString == "Press the button left") {
                 selectedDateString = currentDate.toString()
-                finishedDateLong = (dateFormat.parse(selectedDateString)?.time ?: currentDate.time) + 60000 //3 600 000 is time for hour
+                finishedDateLong = (dateFormat.parse(selectedDateString)?.time
+                    ?: currentDate.time) + 60000 //3 600 000 is time for hour
             } else {
                 finishedDateLong = dateFormat.parse(selectedDateString)?.time ?: currentDate.time
             }
@@ -103,7 +104,7 @@ class AddFragment : Fragment() {
 
             val difference = finishedDate.time - currentDate.time
 
-            setNotificationAtSelectedTime(difference, title, description)
+            setNotificationAtSelectedTime(currentDate.time, title, description, difference)
 
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)
         }
@@ -155,41 +156,35 @@ class AddFragment : Fragment() {
 
     }
 
-    private fun createNotificationChannel() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Remainder"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("Notify", name, importance)
-
-            val notificationManager =
-                requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
     @SuppressLint("UnspecifiedImmutableFlag")
     private fun setNotificationAtSelectedTime(
-        selectedTimeInMillis: Long,
+        currentTime: Long,
         title: String,
-        description: String
+        description: String,
+        difference: Long
+
     ) {
-        createNotificationChannel()
+
         val intent = Intent(APP, NotificationReceiver::class.java).apply {
             putExtra("title", title)
             putExtra("description", description)
-            putExtra("id", selectedTimeInMillis)
         }
+
+        val id = getIdentificatorForPendingIntent(currentTime)
+        Log.v("id_add", id.toString())
         val pI = PendingIntent.getBroadcast(
             APP,
-            0,
+            id,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
         val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        // Set the alarm to trigger at the selected time
-        alarmManager.set(AlarmManager.RTC_WAKEUP, Date().time + selectedTimeInMillis, pI)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime + difference, pI)
+
+    }
+    private fun getIdentificatorForPendingIntent(currentTime: Long) : Int{
+        return currentTime.toString().toCharArray().concatToString(4,10).toInt()
     }
 
 }

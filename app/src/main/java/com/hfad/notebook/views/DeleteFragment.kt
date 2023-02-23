@@ -61,11 +61,12 @@ class DeleteFragment : Fragment() {
             val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
             val timeCreationLong = dateFormat.parse(currentNote.creationTime)
             viewModel.delete(currentNote){}
-
+            val id = getIdentificatorForPendingIntent(timeCreationLong.time)
+            Log.v("id_delete", id.toString())
             val intent = Intent(APP, NotificationReceiver::class.java)
             val pI = PendingIntent.getBroadcast(
                 APP,
-                0,
+                id,
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
@@ -77,6 +78,9 @@ class DeleteFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
         }
+    }
+    private fun getIdentificatorForPendingIntent(currentTime: Long) : Int{
+        return currentTime.toString().toCharArray().concatToString(4,10).toInt()
     }
 
 }
