@@ -1,6 +1,5 @@
 package com.hfad.notebook.adapter
 
-import APP
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +11,15 @@ import com.hfad.notebook.views.StartFragment.Companion.clickNote
 import com.hfad.notebook.views.StartFragment.Companion.longClickNote
 import kotlinx.android.synthetic.main.note_items.view.title
 
-class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
+class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewHolder>() {
 
     var listNote = emptyList<Note>()
-    class NoteViewHolder(view:View) : RecyclerView.ViewHolder(view) {}
+
+    class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.note_items, parent, false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.note_items, parent, false)
         return NoteViewHolder(view)
     }
 
@@ -31,7 +32,7 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<Note>){
+    fun setList(list: List<Note>) {
         listNote = list
         notifyDataSetChanged()
     }
@@ -50,5 +51,4 @@ class Adapter : RecyclerView.Adapter<Adapter.NoteViewHolder>() {
     override fun onViewDetachedFromWindow(holder: NoteViewHolder) {
         holder.itemView.setOnClickListener(null)
     }
-
 }

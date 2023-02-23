@@ -1,4 +1,4 @@
-package com.hfad.notebook.ViewModels.Start
+package com.hfad.notebook.ViewModel
 
 import REPOSITORY
 import android.app.Application

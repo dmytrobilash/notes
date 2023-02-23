@@ -1,4 +1,4 @@
-package com.hfad.notebook
+package com.hfad.notebook.Swipe
 
 import android.content.Context
 import android.graphics.*
@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.hfad.notebook.R
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
 

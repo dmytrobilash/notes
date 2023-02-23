@@ -1,4 +1,4 @@
-package com.hfad.notebook.ViewModels.Edit
+package com.hfad.notebook.ViewModel
 
 import REPOSITORY
 import androidx.lifecycle.ViewModel
@@ -7,10 +7,10 @@ import com.hfad.notebook.model.Note
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class EditViewModel : ViewModel() {
-    fun update(note: Note, onSuccess: () -> Unit) =
+class DeleteViewModel : ViewModel() {
+    fun delete(note: Note, onSuccess: () -> Unit) =
         viewModelScope.launch(Dispatchers.IO) {
-            REPOSITORY.update(note) {
+            REPOSITORY.delete(note) {
                 onSuccess()
             }
         }

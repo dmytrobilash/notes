@@ -13,18 +13,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.hfad.notebook.NotificationReceiver
+import com.hfad.notebook.notification.NotificationReceiver
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.Delete.DeleteViewModel
+import com.hfad.notebook.ViewModel.DeleteViewModel
 import com.hfad.notebook.databinding.FragmentDeleteBinding
 import com.hfad.notebook.model.Note
+import com.hfad.notebook.notification.NotificationControl
 import java.text.SimpleDateFormat
 import java.util.*
 
 class DeleteFragment : Fragment() {
 
-    lateinit var binding: FragmentDeleteBinding
-    lateinit var currentNote: Note
+    private lateinit var binding: FragmentDeleteBinding
+    private lateinit var currentNote: Note
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,44 +44,24 @@ class DeleteFragment : Fragment() {
 
     @SuppressLint("SetTextI18n", "UnspecifiedImmutableFlag")
     private fun init() {
-        val viewModel = ViewModelProvider(this).get(DeleteViewModel::class.java)
+        val viewModel = ViewModelProvider(this)[DeleteViewModel::class.java]
         binding.title.text = currentNote.title
         binding.description.text = currentNote.description
         binding.creationTime.text = currentNote.creationTime
         binding.finishedTime.text = currentNote.finished
 
-        when(currentNote.taskPriority){
-            0 ->  binding.taskPriority.text = "High"
-            1 ->  binding.taskPriority.text = "Important"
-            2 ->  binding.taskPriority.text = "Normal"
-            3 ->  binding.taskPriority.text = "Low"
-        }
         binding.taskPriority.text = currentNote.taskPriority.toString()
 
         binding.btnDelete.setOnClickListener {
-            val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
-            val timeCreationLong = dateFormat.parse(currentNote.creationTime)
-            viewModel.delete(currentNote){}
-            val id = getIdentificatorForPendingIntent(timeCreationLong.time)
-            Log.v("id_delete", id.toString())
-            val intent = Intent(APP, NotificationReceiver::class.java)
-            val pI = PendingIntent.getBroadcast(
-                APP,
-                id,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-            val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.cancel(pI)
+
+            NotificationControl().cancelNotification(currentNote.creationTime, APP)
+            viewModel.delete(currentNote) {}
             APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
         }
 
         binding.btnBack.setOnClickListener {
             APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
         }
-    }
-    private fun getIdentificatorForPendingIntent(currentTime: Long) : Int{
-        return currentTime.toString().toCharArray().concatToString(4,10).toInt()
     }
 
 }

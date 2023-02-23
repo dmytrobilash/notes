@@ -14,14 +14,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.hfad.notebook.NotificationReceiver
+import com.hfad.notebook.notification.NotificationReceiver
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.Edit.EditViewModel
+import com.hfad.notebook.ViewModel.EditViewModel
+import com.hfad.notebook.adapter.AdapterPriority
 import com.hfad.notebook.databinding.FragmentEditBinding
 import com.hfad.notebook.model.Note
+import com.hfad.notebook.notification.NotificationControl
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,13 +54,7 @@ class EditFragment : Fragment() {
 
     private fun init() {
 
-        val priorities: Array<String> = arrayOf("0", "1", "2", "3")
-        val adapter = ArrayAdapter(
-            APP,
-            R.layout.drop_down_items,
-            priorities
-        )
-        binding.filledExposed.setAdapter(adapter)
+        binding.filledExposed.setAdapter(AdapterPriority().setAdapterPriority())
 
         binding.datePickerBtn.setOnClickListener {
             showDatePicker()
@@ -85,7 +80,7 @@ class EditFragment : Fragment() {
             val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
             val creationDateLong = dateFormat.parse(currentNote.creationTime).time
             val finishedDateLong = dateFormat.parse(currentNote.finished).time
-            updateNotificationAtSelectedTime(
+            NotificationControl().updateNotificationAtSelectedTime(
                 creationDateLong,
                 currentNote.title,
                 currentNote.description,
@@ -136,38 +131,6 @@ class EditFragment : Fragment() {
 
         datePickerDialog.datePicker.minDate = now.timeInMillis
         datePickerDialog.show()
-    }
-
-    @SuppressLint("UnspecifiedImmutableFlag")
-    private fun updateNotificationAtSelectedTime(
-        currentTime: Long,
-        title: String,
-        description: String,
-        difference: Long
-
-    ) {
-
-        val intent = Intent(APP, NotificationReceiver::class.java).apply {
-            putExtra("title", title)
-            putExtra("description", description)
-        }
-
-        val id = getIdentificatorForPendingIntent(currentTime)
-        Log.v("id_update", id.toString())
-        val pI = PendingIntent.getBroadcast(
-            APP,
-            id,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.cancel(pI)
-        alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime + difference, pI)
-
-    }
-
-    private fun getIdentificatorForPendingIntent(currentTime: Long) : Int{
-        return currentTime.toString().toCharArray().concatToString(4,10).toInt()
     }
 
 }

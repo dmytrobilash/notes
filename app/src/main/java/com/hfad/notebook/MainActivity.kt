@@ -21,5 +21,4 @@ class MainActivity : AppCompatActivity() {
         APP = this
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
     }
-
-} 
+}

@@ -4,31 +4,22 @@ import java.util.*
 import APP
 import android.annotation.SuppressLint
 import android.app.*
-import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.hfad.notebook.NotificationReceiver
 import com.hfad.notebook.R
-import com.hfad.notebook.ViewModels.Add.AddViewModel
+import com.hfad.notebook.ViewModel.AddViewModel
+import com.hfad.notebook.adapter.AdapterPriority
 import com.hfad.notebook.databinding.FragmentAddBinding
 import com.hfad.notebook.model.Note
+import com.hfad.notebook.notification.NotificationControl
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.util.*
 
 class AddFragment : Fragment() {
 
@@ -55,14 +46,7 @@ class AddFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(AddViewModel::class.java)
 
-        val priorities: Array<String> = arrayOf("0", "1", "2", "3")
-        val adapter = ArrayAdapter(
-            APP,
-            R.layout.drop_down_items,
-            priorities
-        )
-        binding.filledExposed.setAdapter(adapter)
-
+        binding.filledExposed.setAdapter(AdapterPriority().setAdapterPriority())
 
         binding.datePickerBtn.setOnClickListener {
             showDatePicker()
@@ -104,7 +88,12 @@ class AddFragment : Fragment() {
 
             val difference = finishedDate.time - currentDate.time
 
-            setNotificationAtSelectedTime(currentDate.time, title, description, difference)
+            NotificationControl().setNotificationAtSelectedTime(
+                currentDate.time,
+                title,
+                description,
+                difference
+            )
 
             APP.navController.navigate(R.id.action_addFragment_to_startFragment)
         }
@@ -155,36 +144,4 @@ class AddFragment : Fragment() {
         datePickerDialog.show()
 
     }
-
-    @SuppressLint("UnspecifiedImmutableFlag")
-    private fun setNotificationAtSelectedTime(
-        currentTime: Long,
-        title: String,
-        description: String,
-        difference: Long
-
-    ) {
-
-        val intent = Intent(APP, NotificationReceiver::class.java).apply {
-            putExtra("title", title)
-            putExtra("description", description)
-        }
-
-        val id = getIdentificatorForPendingIntent(currentTime)
-        Log.v("id_add", id.toString())
-        val pI = PendingIntent.getBroadcast(
-            APP,
-            id,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        val alarmManager = requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, currentTime + difference, pI)
-
-    }
-    private fun getIdentificatorForPendingIntent(currentTime: Long) : Int{
-        return currentTime.toString().toCharArray().concatToString(4,10).toInt()
-    }
-
 }
