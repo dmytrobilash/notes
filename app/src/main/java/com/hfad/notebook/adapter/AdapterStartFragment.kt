@@ -1,6 +1,7 @@
 package com.hfad.notebook.adapter
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import com.hfad.notebook.R
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.views.StartFragment.Companion.clickNote
 import com.hfad.notebook.views.StartFragment.Companion.longClickNote
-import kotlinx.android.synthetic.main.note_items.view.title
+import kotlinx.android.synthetic.main.note_items.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewHolder>() {
 
@@ -23,8 +26,11 @@ class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewH
         return NoteViewHolder(view)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.itemView.title.text = listNote[position].title
+        holder.itemView.creation_time.text = listNote[position].creationTime
+        holder.itemView.finished_start_fragment.text = listNote[position].finished
     }
 
     override fun getItemCount(): Int {

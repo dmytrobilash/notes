@@ -1,10 +1,15 @@
 package com.hfad.notebook.views
 
 import APP
+import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,6 +20,13 @@ import com.hfad.notebook.ViewModel.StartViewModel
 import com.hfad.notebook.adapter.AdapterStartFragment
 import com.hfad.notebook.databinding.FragmentStartBinding
 import com.hfad.notebook.model.Note
+import kotlinx.android.synthetic.main.fragment_delete.view.*
+import kotlinx.android.synthetic.main.fragment_start.*
+import kotlinx.android.synthetic.main.note_items.*
+import kotlinx.android.synthetic.main.note_items.view.*
+import kotlinx.coroutines.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class StartFragment : Fragment() {
@@ -35,7 +47,6 @@ class StartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
-
     }
 
     private fun init() {
@@ -50,6 +61,25 @@ class StartFragment : Fragment() {
 
         binding.fabAdd.setOnClickListener {
             APP.navController.navigate(R.id.action_startFragment_to_addFragment)
+        }
+
+
+        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
+        val scope = CoroutineScope(Dispatchers.Default)
+        val interval = 1L
+
+        scope.launch {
+            while (true) {
+                delay(interval) // Convert seconds to milliseconds
+                withContext(Dispatchers.Main) {
+                    for (i in 0 until adapter.listNote.size) {
+                        var finished = (dateFormat.parse(adapter.listNote[i].finished)?.time)
+                        if (finished!! - Date().time < 3600000) {
+                            updateTextColor(i, Color.RED)
+                        }
+                    }
+                }
+            }
         }
 
         val swipe = object : Swipe(context) {
@@ -81,6 +111,10 @@ class StartFragment : Fragment() {
             APP.navController.navigate(R.id.action_startFragment_to_editFragment, bundle)
             return true
         }
+    }
+
+    private fun updateTextColor(position: Int, color: Int) {
+        rv?.findViewHolderForAdapterPosition(position)?.itemView?.finished_start_fragment?.setTextColor(color)
     }
 }
 
