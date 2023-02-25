@@ -142,6 +142,5 @@ class AddFragment : Fragment() {
 
         datePickerDialog.datePicker.minDate = now.timeInMillis
         datePickerDialog.show()
-
     }
 }

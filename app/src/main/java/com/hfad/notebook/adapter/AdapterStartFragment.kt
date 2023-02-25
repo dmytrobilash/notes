@@ -1,7 +1,6 @@
 package com.hfad.notebook.adapter
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.views.StartFragment.Companion.clickNote
+import com.hfad.notebook.views.StartFragment.Companion.delete
 import com.hfad.notebook.views.StartFragment.Companion.longClickNote
 import kotlinx.android.synthetic.main.note_items.view.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewHolder>() {
@@ -31,6 +30,26 @@ class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewH
         holder.itemView.title.text = listNote[position].title
         holder.itemView.creation_time.text = listNote[position].creationTime
         holder.itemView.finished_start_fragment.text = listNote[position].finished
+        holder.itemView.menu_layout.visibility = View.GONE
+        var isMenuVisible = false
+        holder.itemView.menu_icon.setOnClickListener {
+            if (!isMenuVisible) {
+                holder.itemView.menu_layout.visibility = View.VISIBLE
+                isMenuVisible = true
+            } else {
+                holder.itemView.menu_layout.visibility = View.GONE
+                isMenuVisible = false
+            }
+        }
+
+        holder.itemView.edit_item.setOnClickListener {
+            longClickNote(listNote[holder.adapterPosition])
+        }
+
+        holder.itemView.delete_item.setOnClickListener {
+            isMenuVisible = false
+            delete(listNote[holder.adapterPosition])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -48,7 +67,8 @@ class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewH
         holder.itemView.setOnClickListener {
             clickNote(listNote[holder.adapterPosition])
         }
-        holder.itemView.setOnLongClickListener {
+
+        holder.itemView.edit_item.setOnClickListener {
             longClickNote(listNote[holder.adapterPosition])
         }
 

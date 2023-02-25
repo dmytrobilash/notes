@@ -5,8 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="16dp"
     app:cardCornerRadius="15dp"
-    android:layout_margin="15dp"
-    >
+    android:layout_margin="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,6 +52,47 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/menu_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="end|center"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:src="@drawable/ic_baseline_more_vert_24" />
+
+    <LinearLayout
+        android:id="@+id/menu_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:elevation="8dp"
+        android:visibility="gone"
+        android:layout_marginStart="93dp"
+        android:padding="10dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/edit_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit note"
+            android:layout_gravity="end"
+            android:textColor="@color/black"
+            android:layout_marginBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/delete_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:textColor="@color/black"
+            android:text="Delete note"/>
     </LinearLayout>
 
 

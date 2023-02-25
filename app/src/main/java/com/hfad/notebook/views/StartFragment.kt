@@ -43,7 +43,6 @@ class StartFragment : Fragment() {
         binding = FragmentStartBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
@@ -110,6 +109,11 @@ class StartFragment : Fragment() {
             bundle.putSerializable("note", note)
             APP.navController.navigate(R.id.action_startFragment_to_editFragment, bundle)
             return true
+        }
+
+        fun delete(note: Note){
+            val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
+            viewModel.delete(note) {}
         }
     }
 
