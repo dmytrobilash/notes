@@ -1,25 +1,31 @@
 package com.hfad.notebook.views
 
-import java.util.*
 import APP
 import android.annotation.SuppressLint
 import android.app.*
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.Layout
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.hfad.notebook.DescriptionTextWatcher
 import com.hfad.notebook.R
 import com.hfad.notebook.ViewModel.AddViewModel
-import com.hfad.notebook.adapter.AdapterPriority
 import com.hfad.notebook.databinding.FragmentAddBinding
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.notification.NotificationControl
 import java.text.SimpleDateFormat
+import java.util.*
+
 
 class AddFragment : Fragment() {
 
@@ -46,7 +52,8 @@ class AddFragment : Fragment() {
 
         val viewModel = ViewModelProvider(this).get(AddViewModel::class.java)
 
-        binding.filledExposed.setAdapter(AdapterPriority().setAdapterPriority())
+        val editText: EditText = binding.editDescription.editText!!
+        DescriptionTextWatcher().limitEditTextLines(editText, 5)
 
         binding.datePickerBtn.setOnClickListener {
             showDatePicker()
@@ -57,15 +64,12 @@ class AddFragment : Fragment() {
             val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
             val title = binding.editTitle.editText?.text.toString()
             val description = binding.editDescription.editText?.text.toString()
-            var taskPriority = binding.filledExposed.text.toString()
             var selectedDateString: String = binding.dateInput.text.toString()
-
-            if (taskPriority == "") taskPriority = "0"
-
+            Log.v("AAAA", selectedDateString.toString())
             val currentDate = Date()
 
             val finishedDateLong: Long
-            if (selectedDateString == "Press the button left") {
+            if (selectedDateString == "") {
                 selectedDateString = currentDate.toString()
                 finishedDateLong = (dateFormat.parse(selectedDateString)?.time
                     ?: currentDate.time) + 60000 //3 600 000 is time for hour
@@ -80,7 +84,6 @@ class AddFragment : Fragment() {
                     title = title,
                     description = description,
                     creationTime = currentDate.toString(),
-                    taskPriority = taskPriority.toInt(),
                     finished = finishedDateString
                 )
             ) {}
@@ -143,4 +146,5 @@ class AddFragment : Fragment() {
         datePickerDialog.datePicker.minDate = now.timeInMillis
         datePickerDialog.show()
     }
+
 }

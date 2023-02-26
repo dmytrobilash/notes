@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.hfad.notebook.DescriptionTextWatcher
 import com.hfad.notebook.notification.NotificationReceiver
 import com.hfad.notebook.R
 import com.hfad.notebook.ViewModel.EditViewModel
@@ -23,6 +24,7 @@ import com.hfad.notebook.adapter.AdapterPriority
 import com.hfad.notebook.databinding.FragmentEditBinding
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.notification.NotificationControl
+import kotlinx.android.synthetic.main.fragment_delete.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,8 +42,8 @@ class EditFragment : Fragment() {
         currentNote = arguments?.getSerializable("note") as Note
         binding.editTitle.editText?.setText(currentNote.title)
         binding.editDescription.editText?.setText(currentNote.description)
-        binding.filledExposedTil.editText?.setText(currentNote.taskPriority.toString())
         binding.dateInput.text = currentNote.finished
+
 
         return binding.root
 
@@ -53,18 +55,18 @@ class EditFragment : Fragment() {
     }
 
     private fun init() {
-
-        binding.filledExposed.setAdapter(AdapterPriority().setAdapterPriority())
+        val viewModel = ViewModelProvider(this).get(EditViewModel::class.java)
+        val editText = binding.editDescription.editText!!
+        DescriptionTextWatcher().limitEditTextLines(editText, 5)
 
         binding.datePickerBtn.setOnClickListener {
             showDatePicker()
         }
 
         binding.btnSave.setOnClickListener {
-            val viewModel = ViewModelProvider(this).get(EditViewModel::class.java)
+
             currentNote.title = binding.editTitle.editText?.text.toString()
             currentNote.description = binding.editDescription.editText?.text.toString()
-            currentNote.taskPriority = binding.filledExposedTil.editText?.text.toString().toInt()
             currentNote.finished = binding.dateInput.text.toString()
 
             viewModel.update(
@@ -72,7 +74,6 @@ class EditFragment : Fragment() {
                     id = currentNote.id,
                     title = currentNote.title,
                     description = currentNote.description,
-                    taskPriority = currentNote.taskPriority,
                     finished = currentNote.finished
                 )
             ) {}

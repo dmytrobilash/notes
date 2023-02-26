@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="deletecolor">#CE2A1D</color>
+    <color name="delete_color2">#595758</color>
 </resources>

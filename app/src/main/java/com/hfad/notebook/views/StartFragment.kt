@@ -3,13 +3,9 @@ package com.hfad.notebook.views
 import APP
 import android.graphics.Color
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,9 +16,8 @@ import com.hfad.notebook.ViewModel.StartViewModel
 import com.hfad.notebook.adapter.AdapterStartFragment
 import com.hfad.notebook.databinding.FragmentStartBinding
 import com.hfad.notebook.model.Note
-import kotlinx.android.synthetic.main.fragment_delete.view.*
+import com.hfad.notebook.notification.NotificationControl
 import kotlinx.android.synthetic.main.fragment_start.*
-import kotlinx.android.synthetic.main.note_items.*
 import kotlinx.android.synthetic.main.note_items.view.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
@@ -88,6 +83,7 @@ class StartFragment : Fragment() {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
                         val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
+                        NotificationControl().cancelNotification(adapter.listNote[viewHolder.adapterPosition].creationTime, APP)
                         viewModel.delete(adapter.listNote[viewHolder.adapterPosition]) {}
                     }
                 }
@@ -104,16 +100,10 @@ class StartFragment : Fragment() {
             APP.navController.navigate(R.id.action_startFragment_to_deleteFragment, bundle)
         }
 
-        fun longClickNote(note: Note): Boolean {
+        fun longClickNote(note: Note) {
             val bundle = Bundle()
             bundle.putSerializable("note", note)
             APP.navController.navigate(R.id.action_startFragment_to_editFragment, bundle)
-            return true
-        }
-
-        fun delete(note: Note){
-            val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
-            viewModel.delete(note) {}
         }
     }
 

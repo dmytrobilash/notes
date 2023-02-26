@@ -50,10 +50,7 @@ class DeleteFragment : Fragment() {
         binding.creationTime.text = currentNote.creationTime
         binding.finishedTime.text = currentNote.finished
 
-        binding.taskPriority.text = currentNote.taskPriority.toString()
-
         binding.btnDelete.setOnClickListener {
-
             NotificationControl().cancelNotification(currentNote.creationTime, APP)
             viewModel.delete(currentNote) {}
             APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
