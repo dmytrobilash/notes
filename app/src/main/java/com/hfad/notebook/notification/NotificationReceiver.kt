@@ -14,6 +14,7 @@ class NotificationReceiver : BroadcastReceiver () {
 
         val notificationTitle = intent?.getStringExtra("title")
         val notificationMessage = intent?.getStringExtra("description")
+        val notificationId = intent?.getIntExtra("id", 0)
 
         val builder = NotificationCompat.Builder(context!!, "my_channel_01")
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
@@ -22,6 +23,10 @@ class NotificationReceiver : BroadcastReceiver () {
             .setPriority(NotificationCompat.PRIORITY_MAX)
 
         val notificationManager = NotificationManagerCompat.from(context)
-        notificationManager.notify(1, builder.build())
+        if (notificationId != null) {
+            notificationManager.notify(notificationId, builder.build())
+        }else{
+            notificationManager.notify(0, builder.build())
+        }
     }
 }

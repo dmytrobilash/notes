@@ -28,12 +28,12 @@ class NotificationControl {
 
     ) {
         notificationChanel()
+        val id = getIdentificatorForPendingIntent(currentTime)
         val intent = Intent(APP, NotificationReceiver::class.java).apply {
             putExtra("title", title)
             putExtra("description", description)
+            putExtra("id", id)
         }
-
-        val id = getIdentificatorForPendingIntent(currentTime)
 
         val pI = PendingIntent.getBroadcast(
             APP,
@@ -53,7 +53,6 @@ class NotificationControl {
         val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
         val timeCreationLong = dateFormat.parse(creationTime)?.time ?: return
         val id = getIdentificatorForPendingIntent(timeCreationLong)
-        Log.v("id_delete", id.toString())
         val intent = Intent(context, NotificationReceiver::class.java)
         val pI = PendingIntent.getBroadcast(
             context,
@@ -74,12 +73,13 @@ class NotificationControl {
 
     ) {
         notificationChanel()
+        val id = getIdentificatorForPendingIntent(currentTime)
         val intent = Intent(APP, NotificationReceiver::class.java).apply {
             putExtra("title", title)
             putExtra("description", description)
+            putExtra("id", id)
         }
 
-        val id = getIdentificatorForPendingIntent(currentTime)
         Log.v("id_update", id.toString())
         val pI = PendingIntent.getBroadcast(
             APP,
@@ -101,7 +101,7 @@ class NotificationControl {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Notebook"
             val descriptionText = "This is my notification channel"
-            val importance = NotificationManager.IMPORTANCE_HIGH
+            val importance = NotificationManager.IMPORTANCE_DEFAULT //if it is not working use _MAX or _HIGH
             val channel = NotificationChannel("my_channel_01", name, importance).apply {
                 description = descriptionText
             }
