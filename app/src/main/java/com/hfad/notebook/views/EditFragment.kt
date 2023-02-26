@@ -1,15 +1,9 @@
 package com.hfad.notebook.views
 
 import APP
-import android.annotation.SuppressLint
-import android.app.AlarmManager
 import android.app.DatePickerDialog
-import android.app.PendingIntent
 import android.app.TimePickerDialog
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,14 +11,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.hfad.notebook.DescriptionTextWatcher
-import com.hfad.notebook.notification.NotificationReceiver
 import com.hfad.notebook.R
 import com.hfad.notebook.ViewModel.EditViewModel
-import com.hfad.notebook.adapter.AdapterPriority
 import com.hfad.notebook.databinding.FragmentEditBinding
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.notification.NotificationControl
-import kotlinx.android.synthetic.main.fragment_delete.*
 import java.text.SimpleDateFormat
 import java.util.*
 

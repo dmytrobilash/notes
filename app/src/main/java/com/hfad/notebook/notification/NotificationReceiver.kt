@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.hfad.notebook.R
 
 class NotificationReceiver : BroadcastReceiver () {
@@ -14,14 +15,13 @@ class NotificationReceiver : BroadcastReceiver () {
         val notificationTitle = intent?.getStringExtra("title")
         val notificationMessage = intent?.getStringExtra("description")
 
-        val builder = NotificationCompat.Builder(context!!, "Notify")
+        val builder = NotificationCompat.Builder(context!!, "my_channel_01")
             .setSmallIcon(R.drawable.ic_baseline_notifications_24)
             .setContentTitle(notificationTitle)
             .setContentText(notificationMessage)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
 
-        val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(0, builder.build())
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(1, builder.build())
     }
 }

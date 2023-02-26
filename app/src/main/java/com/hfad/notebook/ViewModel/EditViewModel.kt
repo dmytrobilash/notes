@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class EditViewModel : ViewModel() {
+
     fun update(note: Note, onSuccess: () -> Unit) =
         viewModelScope.launch(Dispatchers.IO) {
             REPOSITORY.update(note) {

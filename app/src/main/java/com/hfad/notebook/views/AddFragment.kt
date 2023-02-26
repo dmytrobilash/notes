@@ -91,6 +91,7 @@ class AddFragment : Fragment() {
 
             val difference = finishedDate.time - currentDate.time
 
+            Log.v("AAAAA", difference.toString())
             NotificationControl().setNotificationAtSelectedTime(
                 currentDate.time,
                 title,
