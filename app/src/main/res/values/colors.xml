@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="deletecolor">#CE2A1D</color>
     <color name="delete_color2">#595758</color>
+    <color name="finished_color">#4776D5</color>
+    <color name="background_start">#D8ECF1</color>
+    <color name="background_cards">#ECECEC</color>
+    <color name="fab">#92E0F4</color>
 </resources>

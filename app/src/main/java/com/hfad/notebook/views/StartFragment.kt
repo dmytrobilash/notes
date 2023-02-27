@@ -15,6 +15,7 @@ import androidx.navigation.NavGraphNavigator
 import androidx.navigation.NavOptions
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
 import com.hfad.notebook.Swipe.Swipe
@@ -42,6 +43,9 @@ class StartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStartBinding.inflate(layoutInflater, container, false)
+        val layoutManager = LinearLayoutManager(activity);
+        layoutManager.stackFromEnd = true;
+        binding.rv.layoutManager = layoutManager;
         return binding.root
     }
 
@@ -78,7 +82,7 @@ class StartFragment : Fragment() {
                     for (i in 0 until adapter.listNote.size) {
                         var finished = (dateFormat.parse(adapter.listNote[i].finished)?.time)
                         if (finished!! - Date().time in 1..3599999) {
-                            updateTextColor(i, Color.YELLOW)
+                            updateTextColor(i, Color.rgb(153, 153, 0))
                         } else if (finished!! - Date().time < 0) {
                             updateTextColor(i, Color.RED)
                         }
@@ -121,14 +125,6 @@ class StartFragment : Fragment() {
         }
     }
 
-    private fun clearBackStack() {
-        val fm: FragmentManager = requireActivity().supportFragmentManager
-        if (fm != null) {
-            for (i in 0..fm.backStackEntryCount) {
-                fm.popBackStack()
-            }
-        }
-    }
 
     private fun updateTextColor(position: Int, color: Int) {
         rv?.findViewHolderForAdapterPosition(position)?.itemView?.finished_start_fragment?.setTextColor(

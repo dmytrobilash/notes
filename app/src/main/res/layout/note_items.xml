@@ -5,12 +5,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="16dp"
     app:cardCornerRadius="15dp"
-    android:layout_margin="15dp">
+    android:layout_margin="15dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/background_cards">
 
         <TextView
             android:id="@+id/title"
@@ -48,6 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_example"
+                android:textColor="@color/finished_color"
                 />
 
         </LinearLayout>
@@ -56,10 +59,11 @@
 
     <ImageView
         android:id="@+id/edit_item"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="end|center"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:layout_gravity="end"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
         android:focusable="true"
         android:padding="10dp"
