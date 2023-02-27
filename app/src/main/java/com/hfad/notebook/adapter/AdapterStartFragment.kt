@@ -10,7 +10,6 @@ import com.hfad.notebook.model.Note
 import com.hfad.notebook.views.StartFragment.Companion.clickNote
 import com.hfad.notebook.views.StartFragment.Companion.longClickNote
 import kotlinx.android.synthetic.main.note_items.view.*
-import java.util.*
 
 class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewHolder>() {
 

@@ -3,10 +3,8 @@ package com.hfad.notebook
 import APP
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import com.hfad.notebook.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

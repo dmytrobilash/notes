@@ -2,25 +2,17 @@ package com.hfad.notebook.views
 
 import APP
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.hfad.notebook.notification.NotificationReceiver
 import com.hfad.notebook.R
 import com.hfad.notebook.ViewModel.DeleteViewModel
 import com.hfad.notebook.databinding.FragmentDeleteBinding
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.notification.NotificationControl
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DeleteFragment : Fragment() {
 
@@ -53,11 +45,19 @@ class DeleteFragment : Fragment() {
         binding.btnDelete.setOnClickListener {
             NotificationControl().cancelNotification(currentNote.creationTime, APP)
             viewModel.delete(currentNote) {}
-            APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
+            if (APP.navController.currentDestination?.id == R.id.deleteFragment) {
+                APP.navController.popBackStack(R.id.startFragment, false)
+            } else {
+                APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
+            }
         }
 
         binding.btnBack.setOnClickListener {
-            APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
+            if (APP.navController.currentDestination?.id == R.id.deleteFragment) {
+                APP.navController.popBackStack(R.id.startFragment, false)
+            } else {
+                APP.navController.navigate(R.id.action_deleteFragment_to_startFragment)
+            }
         }
     }
 

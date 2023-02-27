@@ -5,9 +5,6 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.Layout
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +14,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import com.hfad.notebook.DescriptionTextWatcher
 import com.hfad.notebook.R
 import com.hfad.notebook.ViewModel.AddViewModel
@@ -65,7 +63,7 @@ class AddFragment : Fragment() {
             val title = binding.editTitle.editText?.text.toString()
             val description = binding.editDescription.editText?.text.toString()
             var selectedDateString: String = binding.dateInput.text.toString()
-            Log.v("AAAA", selectedDateString.toString())
+
             val currentDate = Date()
 
             val finishedDateLong: Long
@@ -99,11 +97,19 @@ class AddFragment : Fragment() {
                 difference
             )
 
-            APP.navController.navigate(R.id.action_addFragment_to_startFragment)
+            if (APP.navController.currentDestination?.id == R.id.addFragment) {
+                APP.navController.popBackStack(R.id.startFragment, false)
+            } else {
+                APP.navController.navigate(R.id.action_addFragment_to_startFragment)
+            }
         }
 
         binding.btnBack.setOnClickListener {
-            APP.navController.navigate(R.id.action_addFragment_to_startFragment)
+            if (APP.navController.currentDestination?.id == R.id.addFragment) {
+                APP.navController.popBackStack(R.id.startFragment, false)
+            } else {
+                APP.navController.navigate(R.id.action_addFragment_to_startFragment)
+            }
         }
     }
 

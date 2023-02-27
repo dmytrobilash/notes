@@ -3,11 +3,17 @@ package com.hfad.notebook.views
 import APP
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavGraphNavigator
+import androidx.navigation.NavOptions
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.hfad.notebook.R
@@ -38,9 +44,12 @@ class StartFragment : Fragment() {
         binding = FragmentStartBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
+
     }
 
     private fun init() {
@@ -68,7 +77,9 @@ class StartFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     for (i in 0 until adapter.listNote.size) {
                         var finished = (dateFormat.parse(adapter.listNote[i].finished)?.time)
-                        if (finished!! - Date().time < 3600000) {
+                        if (finished!! - Date().time in 1..3599999) {
+                            updateTextColor(i, Color.YELLOW)
+                        } else if (finished!! - Date().time < 0) {
                             updateTextColor(i, Color.RED)
                         }
                     }
@@ -83,7 +94,10 @@ class StartFragment : Fragment() {
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
                         val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
-                        NotificationControl().cancelNotification(adapter.listNote[viewHolder.adapterPosition].creationTime, APP)
+                        NotificationControl().cancelNotification(
+                            adapter.listNote[viewHolder.adapterPosition].creationTime,
+                            APP
+                        )
                         viewModel.delete(adapter.listNote[viewHolder.adapterPosition]) {}
                     }
                 }
@@ -107,8 +121,19 @@ class StartFragment : Fragment() {
         }
     }
 
+    private fun clearBackStack() {
+        val fm: FragmentManager = requireActivity().supportFragmentManager
+        if (fm != null) {
+            for (i in 0..fm.backStackEntryCount) {
+                fm.popBackStack()
+            }
+        }
+    }
+
     private fun updateTextColor(position: Int, color: Int) {
-        rv?.findViewHolderForAdapterPosition(position)?.itemView?.finished_start_fragment?.setTextColor(color)
+        rv?.findViewHolderForAdapterPosition(position)?.itemView?.finished_start_fragment?.setTextColor(
+            color
+        )
     }
 }
 

@@ -78,11 +78,19 @@ class EditFragment : Fragment() {
                 currentNote.description,
                 finishedDateLong - creationDateLong
             )
-            APP.navController.navigate(R.id.action_editFragment_to_startFragment)
+            if (APP.navController.currentDestination?.id == R.id.editFragment) {
+                APP.navController.popBackStack(R.id.startFragment, false)
+            } else {
+                APP.navController.navigate(R.id.action_editFragment_to_startFragment)
+            }
         }
 
         binding.btnBack.setOnClickListener {
-            APP.navController.navigate(R.id.action_editFragment_to_startFragment)
+            if (APP.navController.currentDestination?.id == R.id.editFragment) {
+                APP.navController.popBackStack(R.id.startFragment, false)
+            } else {
+                APP.navController.navigate(R.id.action_editFragment_to_startFragment)
+            }
         }
     }
 
