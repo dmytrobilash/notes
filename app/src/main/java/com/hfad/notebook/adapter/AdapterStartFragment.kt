@@ -31,7 +31,7 @@ class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewH
     }
 
     override fun getItemCount(): Int {
-        return listNote.size;
+        return listNote.size
     }
 
     @SuppressLint("NotifyDataSetChanged")

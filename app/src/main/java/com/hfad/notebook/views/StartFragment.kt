@@ -43,9 +43,9 @@ class StartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStartBinding.inflate(layoutInflater, container, false)
-        val layoutManager = LinearLayoutManager(activity);
-        layoutManager.stackFromEnd = true;
-        binding.rv.layoutManager = layoutManager;
+        //val layoutManager = LinearLayoutManager(activity);
+        //layoutManager.stackFromEnd = true;
+        //binding.rv.layoutManager = layoutManager;
         return binding.root
     }
 
@@ -97,7 +97,6 @@ class StartFragment : Fragment() {
 
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
                         NotificationControl().cancelNotification(
                             adapter.listNote[viewHolder.adapterPosition].creationTime,
                             APP

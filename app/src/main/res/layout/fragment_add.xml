@@ -24,12 +24,14 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edit_title"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
             android:layout_marginTop="40dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:hint="@string/enter_the_tittle"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@android:color/white"
             app:counterMaxLength="20">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -48,18 +50,17 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
             android:gravity="top"
-            android:hint="@string/enter_the_description">
+            android:hint="@string/enter_the_description"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@android:color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
-                android:lines="5"
-                android:maxLines="5"
-                />
+                android:lines="5" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
 
 
         <LinearLayout
@@ -74,8 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:textSize="20dp"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/date_picker_btn"
@@ -83,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/pick_date"/>
+                android:text="@string/pick_date" />
 
         </LinearLayout>
 

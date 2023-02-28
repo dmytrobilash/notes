@@ -8,7 +8,47 @@
     android:background="@color/background_start"
     tools:context=".views.StartFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:textColor="@color/background_start"
+        app:title="Notebook"
+        app:titleTextColor="@color/background_start">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp">
+
+            <ImageView
+                android:id="@+id/search_start"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="content description"
+                android:src="@drawable/ic_baseline_search_24"
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                app:tint="@color/background_start" />
+
+            <ImageView
+                android:id="@+id/more_vert_start"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="content description"
+                android:src="@drawable/ic_baseline_more_vert_24"
+                android:clickable="true"
+                app:tint="@color/background_start"/>
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/my_toolbar"
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

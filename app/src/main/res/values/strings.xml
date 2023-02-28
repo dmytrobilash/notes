@@ -10,7 +10,8 @@
     <string name="text_example">TEXT_EXAMPLE</string>
     <string name="btnadd">btnAdd</string>
     <string name="title">Title</string>
-    <string name="creation_date">Creation date:</string>
+    <string name="creation_date">Created on:</string>
+    <string name="finished_date">Finished on:</string>
     <string name="description">Description</string>
     <string name="create_note">Create Note</string>
     <string name="select_priority">Select priority</string>
