@@ -44,8 +44,8 @@ class StartFragment : Fragment() {
     ): View? {
         binding = FragmentStartBinding.inflate(layoutInflater, container, false)
         //val layoutManager = LinearLayoutManager(activity);
-        //layoutManager.stackFromEnd = true;
-        //binding.rv.layoutManager = layoutManager;
+       // layoutManager.stackFromEnd = true;
+       // binding.rv.layoutManager = layoutManager;
         return binding.root
     }
 
@@ -70,6 +70,19 @@ class StartFragment : Fragment() {
             APP.navController.navigate(R.id.action_startFragment_to_addFragment)
         }
 
+        //todo correct buttons for it
+        binding.searchStart.setOnClickListener {
+            viewModel.getAllNotes().observe(viewLifecycleOwner) { listNotes ->
+                adapter.setList(listNotes.sortedBy { it.finished })
+
+            }
+        }
+        //todo correct buttons for it
+        binding.moreVertStart.setOnClickListener {
+            viewModel.getAllNotes().observe(viewLifecycleOwner) { listNotes ->
+                adapter.setList(listNotes.sortedByDescending { it.finished })
+            }
+        }
 
         val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
         val scope = CoroutineScope(Dispatchers.Default)
@@ -85,6 +98,8 @@ class StartFragment : Fragment() {
                             updateTextColor(i, Color.rgb(153, 153, 0))
                         } else if (finished!! - Date().time < 0) {
                             updateTextColor(i, Color.RED)
+                        }else {
+                            updateTextColor(i, Color.rgb(71, 118, 213))
                         }
                     }
                 }
@@ -97,6 +112,7 @@ class StartFragment : Fragment() {
 
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
+                        val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
                         NotificationControl().cancelNotification(
                             adapter.listNote[viewHolder.adapterPosition].creationTime,
                             APP
@@ -131,4 +147,3 @@ class StartFragment : Fragment() {
         )
     }
 }
-

@@ -23,6 +23,7 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
     fun getAllNotes(): LiveData<List<Note>> {
         return REPOSITORY.allNotes
     }
+
     fun delete(note: Note, onSuccess: () -> Unit) =
         viewModelScope.launch(Dispatchers.IO) {
             REPOSITORY.delete(note) {
