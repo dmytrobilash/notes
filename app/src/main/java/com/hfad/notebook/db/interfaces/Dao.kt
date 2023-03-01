@@ -21,8 +21,14 @@ interface Dao {
     fun getAll():LiveData<List<Note>>
 
     @Query("SELECT * FROM note_table ORDER BY finished  DESC")
-    fun getAllByDescending(): LiveData<List<Note>>
+    fun getAllFinishedByDescending(): LiveData<List<Note>>
 
     @Query("SELECT * FROM note_table ORDER BY finished ASC")
-    fun getAllByAsc(): LiveData<List<Note>>
+    fun getAllFinishedByAscending(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM note_table ORDER BY creation DESC")
+    fun getAllCreationByDescending(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM note_table ORDER BY creation ASC")
+    fun getAllCreationByAscending(): LiveData<List<Note>>
 }

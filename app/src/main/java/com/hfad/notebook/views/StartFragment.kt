@@ -56,6 +56,10 @@ class StartFragment : Fragment() {
     private fun init() {
         val viewModel = ViewModelProvider(this).get(StartViewModel::class.java)
         viewModel.initDataBase()
+        var isVisible = false
+        var topBottomF = false
+        var topBottomC = false
+
         recyclerView = binding.rv
         adapter = AdapterStartFragment()
         recyclerView.adapter = adapter
@@ -69,19 +73,57 @@ class StartFragment : Fragment() {
             APP.navController.navigate(R.id.action_startFragment_to_addFragment)
         }
 
-        binding.searchStart.setOnClickListener {
-            viewModel.getAllNotesByFinishedAsc().observe(viewLifecycleOwner) { listNotes ->
-                adapter.setList(listNotes)
-
-            }
-        }
-
         binding.moreVertStart.setOnClickListener {
-            viewModel.getAllNotesByFinishedDescending().observe(viewLifecycleOwner) { listNotes ->
-                adapter.setList(listNotes)
+
+            if (isVisible) {
+                binding.vert.visibility = View.GONE
+                isVisible = false
+            } else {
+                binding.vert.visibility = View.VISIBLE
+                isVisible = true
+            }
+
+        }
+
+        binding.creation.setOnClickListener {
+
+            if (topBottomF) {
+                viewModel.getAllFinishedByAscending().observe(viewLifecycleOwner) { listNotes ->
+                    adapter.setList(listNotes)
+                }
+                binding.vert.visibility = View.GONE
+                topBottomF = false
+                isVisible = false
+            } else {
+                viewModel.getAllFinishedByDescending().observe(viewLifecycleOwner) { listNotes ->
+                    adapter.setList(listNotes)
+                }
+                binding.vert.visibility = View.GONE
+                topBottomF = true
+                isVisible = false
             }
         }
 
+        binding.finished.setOnClickListener {
+
+            if (topBottomC) {
+                viewModel.getAllCreationByAscending().observe(viewLifecycleOwner) { listNotes ->
+                    adapter.setList(listNotes)
+                }
+                binding.vert.visibility = View.GONE
+                topBottomC = false
+            } else {
+                viewModel.getAllCreationByDescending().observe(viewLifecycleOwner) { listNotes ->
+                    adapter.setList(listNotes)
+                }
+                binding.vert.visibility = View.GONE
+                topBottomC = true
+            }
+        }
+
+        binding.searchStart.setOnClickListener {
+            // TODO: implement search list elements 
+        }
 
         val scope = CoroutineScope(Dispatchers.Default)
         val interval = 1L
@@ -138,11 +180,9 @@ class StartFragment : Fragment() {
         }
     }
 
-
     private fun updateTextColor(position: Int, color: Int) {
         rv?.findViewHolderForAdapterPosition(position)?.itemView?.finished_start_fragment?.setTextColor(
             color
         )
     }
-
 }

@@ -6,13 +6,22 @@ import com.hfad.notebook.db.interfaces.Repository
 import com.hfad.notebook.model.Note
 
 class Realization(private val dao: Dao) : Repository {
+
     override val allNotes: LiveData<List<Note>>
         get() = dao.getAll()
 
-    override val allNotesByDescending: LiveData<List<Note>>
-        get() = dao.getAllByDescending()
-    override val allNotesByAsc: LiveData<List<Note>>
-        get() = dao.getAllByAsc()
+    override val getAllCreationByAscending: LiveData<List<Note>>
+        get() = dao.getAllCreationByAscending()
+
+    override val getAllCreationByDescending: LiveData<List<Note>>
+        get() = dao.getAllCreationByDescending()
+
+    override val getAllFinishedByAscending: LiveData<List<Note>>
+        get() = dao.getAllFinishedByAscending()
+
+    override val getAllFinishedByDescending: LiveData<List<Note>>
+        get() = dao.getAllFinishedByDescending()
+
     override suspend fun insert(note: Note, onSuccess: () -> Unit) {
         dao.insert(note)
         onSuccess()

@@ -24,11 +24,20 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
         return REPOSITORY.allNotes
     }
 
-    fun getAllNotesByFinishedDescending(): LiveData<List<Note>> {
-        return REPOSITORY.allNotesByDescending
+    fun getAllCreationByAscending(): LiveData<List<Note>>{
+        return REPOSITORY.getAllCreationByAscending
     }
-    fun getAllNotesByFinishedAsc(): LiveData<List<Note>>{
-        return REPOSITORY.allNotesByAsc
+
+    fun getAllCreationByDescending(): LiveData<List<Note>>{
+        return REPOSITORY.getAllCreationByDescending
+    }
+
+    fun getAllFinishedByAscending(): LiveData<List<Note>>{
+        return REPOSITORY.getAllFinishedByAscending
+    }
+
+    fun getAllFinishedByDescending(): LiveData<List<Note>>{
+        return REPOSITORY.getAllFinishedByDescending
     }
 
     fun delete(note: Note, onSuccess: () -> Unit) =
