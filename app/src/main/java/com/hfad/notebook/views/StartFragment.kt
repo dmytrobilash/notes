@@ -56,7 +56,8 @@ class StartFragment : Fragment() {
     private fun init() {
         val viewModel = ViewModelProvider(this).get(StartViewModel::class.java)
         viewModel.initDataBase()
-        var isVisible = false
+        var isVisibleMore = false
+        var isVisibleSearch = false 
         var topBottomF = false
         var topBottomC = false
 
@@ -75,12 +76,12 @@ class StartFragment : Fragment() {
 
         binding.moreVertStart.setOnClickListener {
 
-            if (isVisible) {
+            if (isVisibleMore) {
                 binding.vert.visibility = View.GONE
-                isVisible = false
+                isVisibleMore = false
             } else {
                 binding.vert.visibility = View.VISIBLE
-                isVisible = true
+                isVisibleMore = true
             }
 
         }
@@ -93,14 +94,14 @@ class StartFragment : Fragment() {
                 }
                 binding.vert.visibility = View.GONE
                 topBottomF = false
-                isVisible = false
+                isVisibleMore = false
             } else {
                 viewModel.getAllFinishedByDescending().observe(viewLifecycleOwner) { listNotes ->
                     adapter.setList(listNotes)
                 }
                 binding.vert.visibility = View.GONE
                 topBottomF = true
-                isVisible = false
+                isVisibleMore = false
             }
         }
 
@@ -122,7 +123,19 @@ class StartFragment : Fragment() {
         }
 
         binding.searchStart.setOnClickListener {
-            // TODO: implement search list elements 
+
+            if (isVisibleSearch) {
+                binding.search.visibility = View.GONE
+                isVisibleSearch = false
+            } else {
+                binding.search.visibility = View.VISIBLE
+                isVisibleSearch = true
+            }
+        }
+
+        binding.searchAfterEditText.setOnClickListener {
+            val query = binding.searchViewEditText.text.toString()
+            adapter.filter(query)
         }
 
         val scope = CoroutineScope(Dispatchers.Default)

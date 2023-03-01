@@ -99,4 +99,29 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_toolbar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:background="@color/background_start"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/search_view_edit_text"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/search_after_edit_text"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_baseline_search_24" />
+
+    </LinearLayout>
+
+
 </RelativeLayout>

@@ -44,6 +44,14 @@ class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewH
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun filter(query: String) {
+        listNote = listNote.filter { it.title.lowercase(Locale.getDefault()).contains(query.lowercase(
+            Locale.getDefault()
+        )) }
+        notifyDataSetChanged()
+    }
+
     override fun onViewAttachedToWindow(holder: NoteViewHolder) {
         super.onViewAttachedToWindow(holder)
         holder.itemView.setOnClickListener {
