@@ -30,10 +30,12 @@ class EditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditBinding.inflate(layoutInflater, container, false)
+        val dateFormat = SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.US)
+
         currentNote = arguments?.getSerializable("note") as Note
         binding.editTitle.editText?.setText(currentNote.title)
         binding.editDescription.editText?.setText(currentNote.description)
-        binding.dateInput.text = currentNote.finished
+        binding.dateInput.text = dateFormat.format(currentNote.finished)
 
 
         return binding.root
@@ -58,7 +60,7 @@ class EditFragment : Fragment() {
 
             currentNote.title = binding.editTitle.editText?.text.toString()
             currentNote.description = binding.editDescription.editText?.text.toString()
-            currentNote.finished = binding.dateInput.text.toString()
+            currentNote.finished = binding.dateInput.text.toString().toLong()
 
             viewModel.update(
                 Note(
@@ -69,14 +71,12 @@ class EditFragment : Fragment() {
                 )
             ) {}
 
-            val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
-            val creationDateLong = dateFormat.parse(currentNote.creationTime).time
-            val finishedDateLong = dateFormat.parse(currentNote.finished).time
+
             NotificationControl().updateNotificationAtSelectedTime(
-                creationDateLong,
+                currentNote.creation,
                 currentNote.title,
                 currentNote.description,
-                finishedDateLong - creationDateLong
+                currentNote.finished -  currentNote.creation,
             )
             if (APP.navController.currentDestination?.id == R.id.editFragment) {
                 APP.navController.popBackStack(R.id.startFragment, false)

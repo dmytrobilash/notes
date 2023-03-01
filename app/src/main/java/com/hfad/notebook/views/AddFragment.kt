@@ -81,8 +81,8 @@ class AddFragment : Fragment() {
                 Note(
                     title = title,
                     description = description,
-                    creationTime = currentDate.toString(),
-                    finished = finishedDateString
+                    creation = currentDate.time,
+                    finished = finishedDate.time
                 )
             ) {}
 

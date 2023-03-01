@@ -9,7 +9,10 @@ import com.hfad.notebook.R
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.views.StartFragment.Companion.clickNote
 import com.hfad.notebook.views.StartFragment.Companion.longClickNote
+import kotlinx.android.synthetic.main.fragment_start.*
 import kotlinx.android.synthetic.main.note_items.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewHolder>() {
 
@@ -26,8 +29,9 @@ class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewH
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.itemView.title.text = listNote[position].title
-        holder.itemView.creation_time.text = listNote[position].creationTime
-        holder.itemView.finished_start_fragment.text = listNote[position].finished
+        val dateFormat = SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.US)
+        holder.itemView.creation_time.text = dateFormat.format(listNote[position].creation)
+        holder.itemView.finished_start_fragment.text = dateFormat.format(listNote[position].finished)
     }
 
     override fun getItemCount(): Int {

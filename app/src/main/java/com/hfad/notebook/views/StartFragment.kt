@@ -43,9 +43,6 @@ class StartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStartBinding.inflate(layoutInflater, container, false)
-        //val layoutManager = LinearLayoutManager(activity);
-       // layoutManager.stackFromEnd = true;
-       // binding.rv.layoutManager = layoutManager;
         return binding.root
     }
 
@@ -62,6 +59,8 @@ class StartFragment : Fragment() {
         recyclerView = binding.rv
         adapter = AdapterStartFragment()
         recyclerView.adapter = adapter
+
+
         viewModel.getAllNotes().observe(viewLifecycleOwner) { listNotes ->
             adapter.setList(listNotes)
         }
@@ -70,21 +69,20 @@ class StartFragment : Fragment() {
             APP.navController.navigate(R.id.action_startFragment_to_addFragment)
         }
 
-        //todo correct buttons for it
         binding.searchStart.setOnClickListener {
-            viewModel.getAllNotes().observe(viewLifecycleOwner) { listNotes ->
-                adapter.setList(listNotes.sortedBy { it.finished })
+            viewModel.getAllNotesByFinishedAsc().observe(viewLifecycleOwner) { listNotes ->
+                adapter.setList(listNotes)
 
             }
         }
-        //todo correct buttons for it
+
         binding.moreVertStart.setOnClickListener {
-            viewModel.getAllNotes().observe(viewLifecycleOwner) { listNotes ->
-                adapter.setList(listNotes.sortedByDescending { it.finished })
+            viewModel.getAllNotesByFinishedDescending().observe(viewLifecycleOwner) { listNotes ->
+                adapter.setList(listNotes)
             }
         }
 
-        val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
+
         val scope = CoroutineScope(Dispatchers.Default)
         val interval = 1L
 
@@ -93,12 +91,12 @@ class StartFragment : Fragment() {
                 delay(interval) // Convert seconds to milliseconds
                 withContext(Dispatchers.Main) {
                     for (i in 0 until adapter.listNote.size) {
-                        var finished = (dateFormat.parse(adapter.listNote[i].finished)?.time)
+                        var finished = adapter.listNote[i].finished
                         if (finished!! - Date().time in 1..3599999) {
                             updateTextColor(i, Color.rgb(153, 153, 0))
                         } else if (finished!! - Date().time < 0) {
                             updateTextColor(i, Color.RED)
-                        }else {
+                        } else {
                             updateTextColor(i, Color.rgb(71, 118, 213))
                         }
                     }
@@ -114,7 +112,7 @@ class StartFragment : Fragment() {
                     ItemTouchHelper.LEFT -> {
                         val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
                         NotificationControl().cancelNotification(
-                            adapter.listNote[viewHolder.adapterPosition].creationTime,
+                            adapter.listNote[viewHolder.adapterPosition].creation,
                             APP
                         )
                         viewModel.delete(adapter.listNote[viewHolder.adapterPosition]) {}
@@ -146,4 +144,5 @@ class StartFragment : Fragment() {
             color
         )
     }
+
 }

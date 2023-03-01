@@ -1,7 +1,6 @@
 package com.hfad.notebook.notification
 
 import APP
-import android.R
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.NotificationChannel
@@ -10,9 +9,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.provider.Settings.Global.getString
 import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,10 +46,9 @@ class NotificationControl {
     }
 
     @SuppressLint("UnspecifiedImmutableFlag")
-    fun cancelNotification(creationTime: String, context: Context) {
+    fun cancelNotification(creationTime: Long, context: Context) {
         val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US)
-        val timeCreationLong = dateFormat.parse(creationTime)?.time ?: return
-        val id = getIdentificatorForPendingIntent(timeCreationLong)
+        val id = getIdentificatorForPendingIntent(creationTime)
         val intent = Intent(context, NotificationReceiver::class.java)
         val pI = PendingIntent.getBroadcast(
             context,

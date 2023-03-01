@@ -24,6 +24,13 @@ class StartViewModel(application: Application) : AndroidViewModel(application) {
         return REPOSITORY.allNotes
     }
 
+    fun getAllNotesByFinishedDescending(): LiveData<List<Note>> {
+        return REPOSITORY.allNotesByDescending
+    }
+    fun getAllNotesByFinishedAsc(): LiveData<List<Note>>{
+        return REPOSITORY.allNotesByAsc
+    }
+
     fun delete(note: Note, onSuccess: () -> Unit) =
         viewModelScope.launch(Dispatchers.IO) {
             REPOSITORY.delete(note) {

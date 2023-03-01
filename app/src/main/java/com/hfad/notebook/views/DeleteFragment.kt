@@ -13,6 +13,8 @@ import com.hfad.notebook.ViewModel.DeleteViewModel
 import com.hfad.notebook.databinding.FragmentDeleteBinding
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.notification.NotificationControl
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DeleteFragment : Fragment() {
 
@@ -39,11 +41,13 @@ class DeleteFragment : Fragment() {
         val viewModel = ViewModelProvider(this)[DeleteViewModel::class.java]
         binding.title.text = currentNote.title
         binding.description.text = currentNote.description
-        binding.creationTime.text = currentNote.creationTime
-        binding.finishedTime.text = currentNote.finished
+
+        val dateFormat = SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.US)
+        binding.creationTime.text = dateFormat.format(currentNote.creation)
+        binding.finishedTime.text = dateFormat.format(currentNote.finished)
 
         binding.btnDelete.setOnClickListener {
-            NotificationControl().cancelNotification(currentNote.creationTime, APP)
+            NotificationControl().cancelNotification(currentNote.creation, APP)
             viewModel.delete(currentNote) {}
             if (APP.navController.currentDestination?.id == R.id.deleteFragment) {
                 APP.navController.popBackStack(R.id.startFragment, false)

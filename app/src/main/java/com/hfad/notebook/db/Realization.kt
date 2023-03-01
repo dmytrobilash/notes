@@ -9,6 +9,10 @@ class Realization(private val dao: Dao) : Repository {
     override val allNotes: LiveData<List<Note>>
         get() = dao.getAll()
 
+    override val allNotesByDescending: LiveData<List<Note>>
+        get() = dao.getAllByDescending()
+    override val allNotesByAsc: LiveData<List<Note>>
+        get() = dao.getAllByAsc()
     override suspend fun insert(note: Note, onSuccess: () -> Unit) {
         dao.insert(note)
         onSuccess()
@@ -20,7 +24,7 @@ class Realization(private val dao: Dao) : Repository {
     }
 
     override suspend fun update(note:Note, onSuccess: () -> Unit) {
-        dao.update(note.title, note.description, note.finished, note.taskPriority, note.id)
+        dao.update(note.title, note.description, note.finished, note.id)
         onSuccess()
     }
 

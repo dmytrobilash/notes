@@ -14,10 +14,15 @@ interface Dao {
     @Delete
     suspend fun delete(note: Note)
 
-    @Query("UPDATE note_table SET title = :title, description = :description, finish = :finished, priority = :taskPriority where id = :id")
-    suspend fun update(title: String, description: String, finished: String , taskPriority: Int, id: Int)
+    @Query("UPDATE note_table SET title = :title, description = :description, finished = :finished where id = :id")
+    suspend fun update(title: String, description: String, finished: Long, id: Int)
 
     @Query("SELECT * FROM note_table")
     fun getAll():LiveData<List<Note>>
 
+    @Query("SELECT * FROM note_table ORDER BY finished  DESC")
+    fun getAllByDescending(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM note_table ORDER BY finished ASC")
+    fun getAllByAsc(): LiveData<List<Note>>
 }
