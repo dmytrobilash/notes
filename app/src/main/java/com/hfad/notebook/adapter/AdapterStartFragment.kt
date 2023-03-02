@@ -16,7 +16,8 @@ import java.util.*
 
 class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewHolder>() {
 
-    var listNote = emptyList<Note>()
+    var originalListNote = emptyList<Note>()
+    var filteredListNote = emptyList<Note>()
 
     class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
 
@@ -28,37 +29,39 @@ class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewH
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.itemView.title.text = listNote[position].title
+        holder.itemView.title.text = filteredListNote[position].title
         val dateFormat = SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.US)
-        holder.itemView.creation_time.text = dateFormat.format(listNote[position].creation)
-        holder.itemView.finished_start_fragment.text = dateFormat.format(listNote[position].finished)
+        holder.itemView.creation_time.text = dateFormat.format(filteredListNote[position].creation)
+        holder.itemView.finished_start_fragment.text = dateFormat.format(filteredListNote[position].finished)
     }
+
 
     override fun getItemCount(): Int {
-        return listNote.size
+        return filteredListNote.size
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun setList(list: List<Note>) {
-        listNote = list
-        notifyDataSetChanged()
+        originalListNote = list
+        filter("") // call filter with an empty query to initialize the filteredListNote variable
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun filter(query: String) {
-        listNote = listNote.filter { it.title.lowercase(Locale.getDefault()).contains(query.lowercase(
-            Locale.getDefault()
-        )) }
+        if (query.isNotBlank()) {
+            filteredListNote = originalListNote.filter { it.title.contains(query, ignoreCase = true) }
+        } else {
+            filteredListNote = originalListNote
+        }
         notifyDataSetChanged()
     }
 
     override fun onViewAttachedToWindow(holder: NoteViewHolder) {
         super.onViewAttachedToWindow(holder)
         holder.itemView.setOnClickListener {
-            clickNote(listNote[holder.adapterPosition])
+            clickNote(filteredListNote[holder.adapterPosition])
         }
         holder.itemView.edit_item.setOnClickListener {
-            longClickNote(listNote[holder.adapterPosition])
+            longClickNote(filteredListNote[holder.adapterPosition])
         }
     }
 

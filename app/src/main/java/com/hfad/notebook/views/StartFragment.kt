@@ -136,6 +136,7 @@ class StartFragment : Fragment() {
         binding.searchAfterEditText.setOnClickListener {
             val query = binding.searchViewEditText.text.toString()
             adapter.filter(query)
+
         }
 
         val scope = CoroutineScope(Dispatchers.Default)
@@ -145,8 +146,8 @@ class StartFragment : Fragment() {
             while (true) {
                 delay(interval) // Convert seconds to milliseconds
                 withContext(Dispatchers.Main) {
-                    for (i in 0 until adapter.listNote.size) {
-                        var finished = adapter.listNote[i].finished
+                    for (i in 0 until adapter.filteredListNote.size) {
+                        var finished = adapter.filteredListNote[i].finished
                         if (finished!! - Date().time in 1..3599999) {
                             updateTextColor(i, Color.rgb(153, 153, 0))
                         } else if (finished!! - Date().time < 0) {
@@ -167,10 +168,10 @@ class StartFragment : Fragment() {
                     ItemTouchHelper.LEFT -> {
                         val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
                         NotificationControl().cancelNotification(
-                            adapter.listNote[viewHolder.adapterPosition].creation,
+                            adapter.filteredListNote[viewHolder.adapterPosition].creation,
                             APP
                         )
-                        viewModel.delete(adapter.listNote[viewHolder.adapterPosition]) {}
+                        viewModel.delete(adapter.filteredListNote[viewHolder.adapterPosition]) {}
                     }
                 }
             }
