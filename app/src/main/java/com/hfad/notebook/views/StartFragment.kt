@@ -57,7 +57,7 @@ class StartFragment : Fragment() {
         val viewModel = ViewModelProvider(this).get(StartViewModel::class.java)
         viewModel.initDataBase()
         var isVisibleMore = false
-        var isVisibleSearch = false 
+        var isVisibleSearch = false
         var topBottomF = false
         var topBottomC = false
 
@@ -113,12 +113,14 @@ class StartFragment : Fragment() {
                 }
                 binding.vert.visibility = View.GONE
                 topBottomC = false
+                isVisibleSearch = false
             } else {
                 viewModel.getAllCreationByDescending().observe(viewLifecycleOwner) { listNotes ->
                     adapter.setList(listNotes)
                 }
                 binding.vert.visibility = View.GONE
                 topBottomC = true
+                isVisibleSearch = false
             }
         }
 
@@ -126,6 +128,7 @@ class StartFragment : Fragment() {
 
             if (isVisibleSearch) {
                 binding.search.visibility = View.GONE
+                adapter.filter("")
                 isVisibleSearch = false
             } else {
                 binding.search.visibility = View.VISIBLE
@@ -147,10 +150,10 @@ class StartFragment : Fragment() {
                 delay(interval) // Convert seconds to milliseconds
                 withContext(Dispatchers.Main) {
                     for (i in 0 until adapter.filteredListNote.size) {
-                        var finished = adapter.filteredListNote[i].finished
-                        if (finished!! - Date().time in 1..3599999) {
+                        val finished = adapter.filteredListNote[i].finished
+                        if (finished - Date().time in 1..3599999) {
                             updateTextColor(i, Color.rgb(153, 153, 0))
-                        } else if (finished!! - Date().time < 0) {
+                        } else if (finished - Date().time < 0) {
                             updateTextColor(i, Color.RED)
                         } else {
                             updateTextColor(i, Color.rgb(71, 118, 213))
@@ -161,12 +164,11 @@ class StartFragment : Fragment() {
         }
 
         val swipe = object : Swipe(context) {
-
+            val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
-                        val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
                         NotificationControl().cancelNotification(
                             adapter.filteredListNote[viewHolder.adapterPosition].creation,
                             APP

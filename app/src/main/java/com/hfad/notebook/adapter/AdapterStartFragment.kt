@@ -9,7 +9,6 @@ import com.hfad.notebook.R
 import com.hfad.notebook.model.Note
 import com.hfad.notebook.views.StartFragment.Companion.clickNote
 import com.hfad.notebook.views.StartFragment.Companion.longClickNote
-import kotlinx.android.synthetic.main.fragment_start.*
 import kotlinx.android.synthetic.main.note_items.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,7 +18,7 @@ class AdapterStartFragment : RecyclerView.Adapter<AdapterStartFragment.NoteViewH
     var originalListNote = emptyList<Note>()
     var filteredListNote = emptyList<Note>()
 
-    class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view) {}
+    class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val view: View =

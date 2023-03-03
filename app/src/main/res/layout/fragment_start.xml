@@ -32,7 +32,8 @@
                 android:clickable="true"
                 android:contentDescription="content description"
                 android:src="@drawable/ic_baseline_search_24"
-                app:tint="@color/background_start" />
+                app:tint="@color/background_start"
+                android:focusable="true" />
 
             <ImageView
                 android:id="@+id/more_vert_start"
@@ -41,7 +42,8 @@
                 android:clickable="true"
                 android:contentDescription="content description"
                 android:src="@drawable/ic_baseline_more_vert_24"
-                app:tint="@color/background_start" />
+                app:tint="@color/background_start"
+                android:focusable="true" />
 
         </LinearLayout>
 
@@ -108,21 +110,24 @@
         android:layout_alignParentEnd="true"
         android:layout_marginHorizontal="15dp"
         android:background="@color/background_start"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/search_view_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:layout_marginEnd="15dp"/>
+            android:layout_marginEnd="15dp"
+            tools:ignore="LabelFor" />
 
         <ImageView
             android:id="@+id/search_after_edit_text"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_baseline_search_24"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:contentDescription="TODO" />
 
 
     </LinearLayout>

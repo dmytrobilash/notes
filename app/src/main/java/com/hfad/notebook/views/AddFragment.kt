@@ -70,12 +70,11 @@ class AddFragment : Fragment() {
             if (selectedDateString == "") {
                 selectedDateString = currentDate.toString()
                 finishedDateLong = (dateFormat.parse(selectedDateString)?.time
-                    ?: currentDate.time) + 60000 //3 600 000 is time for hour
+                    ?: currentDate.time) + 60000
             } else {
                 finishedDateLong = dateFormat.parse(selectedDateString)?.time ?: currentDate.time
             }
             val finishedDate = Date(finishedDateLong)
-            val finishedDateString = dateFormat.format(finishedDate)
 
             viewModel.insert(
                 Note(
@@ -89,7 +88,6 @@ class AddFragment : Fragment() {
 
             val difference = finishedDate.time - currentDate.time
 
-            Log.v("AAAAA", difference.toString())
             NotificationControl().setNotificationAtSelectedTime(
                 currentDate.time,
                 title,

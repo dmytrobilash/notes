@@ -24,14 +24,12 @@ class EditFragment : Fragment() {
 
     lateinit var binding: FragmentEditBinding
     lateinit var currentNote: Note
-
+    val dateFormat = SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.US)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentEditBinding.inflate(layoutInflater, container, false)
-        val dateFormat = SimpleDateFormat("hh:mm:ss dd-MM-yyyy", Locale.US)
-
         currentNote = arguments?.getSerializable("note") as Note
         binding.editTitle.editText?.setText(currentNote.title)
         binding.editDescription.editText?.setText(currentNote.description)
@@ -60,7 +58,7 @@ class EditFragment : Fragment() {
 
             currentNote.title = binding.editTitle.editText?.text.toString()
             currentNote.description = binding.editDescription.editText?.text.toString()
-            currentNote.finished = binding.dateInput.text.toString().toLong()
+            currentNote.finished = dateFormat.parse(binding.dateInput.text.toString()).time
 
             viewModel.update(
                 Note(
