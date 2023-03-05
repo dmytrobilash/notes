@@ -164,9 +164,8 @@ class StartFragment : Fragment() {
         }
 
         val swipe = object : Swipe(context) {
-            val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
+                val viewModel = ViewModelProvider(APP).get(StartViewModel::class.java)
                 when (direction) {
                     ItemTouchHelper.LEFT -> {
                         NotificationControl().cancelNotification(
